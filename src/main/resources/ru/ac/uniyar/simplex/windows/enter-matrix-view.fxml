@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1050.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.ac.uniyar.simplex.controllers.EnterMatrixController">
+  <MenuBar>
+    <Menu mnemonicParsing="false" text="File">
+      <MenuItem mnemonicParsing="false" text="Close" />
+    </Menu>
+    <Menu mnemonicParsing="false" text="Edit">
+      <MenuItem mnemonicParsing="false" text="Delete" />
+    </Menu>
+    <Menu mnemonicParsing="false" text="Help">
+      <MenuItem mnemonicParsing="false" text="About" />
+    </Menu>
+      <VBox.margin>
+         <Insets bottom="20.0" />
+      </VBox.margin>
+  </MenuBar>
+  <Label fx:id="welcomeText" alignment="CENTER" text="Введите матрицу">
+    <font>
+      <Font size="18.0" />
+    </font>
+    <VBox.margin>
+      <Insets bottom="30.0" />
+    </VBox.margin>
+  </Label>
+   <GridPane fx:id="matrixFun" alignment="CENTER" hgap="10.0" layoutX="40.0" layoutY="113.0" vgap="10.0">
+      <VBox.margin>
+         <Insets bottom="30.0" />
+      </VBox.margin></GridPane>
+  <GridPane fx:id="matrix" alignment="CENTER" hgap="10.0" vgap="10.0">
+      <VBox.margin>
+         <Insets bottom="30.0" left="30.0" right="30.0" />
+      </VBox.margin></GridPane>
+   <padding>
+      <Insets bottom="30.0" />
+   </padding>
+</VBox>

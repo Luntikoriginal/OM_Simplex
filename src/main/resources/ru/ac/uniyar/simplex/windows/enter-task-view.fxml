@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="370.0" prefWidth="400.0" fx:controller="ru.ac.uniyar.simplex.controllers.EnterTaskController" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1">
+   <MenuBar>
+      <VBox.margin>
+         <Insets bottom="20.0" />
+      </VBox.margin>
+      <Menu mnemonicParsing="false" text="Меню">
+         <MenuItem mnemonicParsing="false" onAction="#onDownloadMenuClicked" text="Загрузить из файла" />
+         <MenuItem mnemonicParsing="false" onAction="#onCloseMenuClicked" text="Вернуться назад" />
+         <MenuItem mnemonicParsing="false" onAction="#onAboutMenuClicked" text="Справка" />
+      </Menu>
+   </MenuBar>
+   <Label fx:id="welcomeText" text="Введите настройки задачи">
+      <font>
+         <Font size="18.0" />
+      </font>
+      <VBox.margin>
+         <Insets bottom="20.0" />
+      </VBox.margin>
+   </Label>
+   <HBox alignment="CENTER" prefHeight="50.0" prefWidth="100.0">
+      <Label text="Количество переменных:  ">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Button mnemonicParsing="false" onAction="#onVarDownButtonClicked" prefHeight="20.0" prefWidth="20.0" text="-">
+         <HBox.margin>
+            <Insets right="10.0" />
+         </HBox.margin>
+         <font>
+            <Font size="10.0" />
+         </font>
+      </Button>
+      <TextField fx:id="variables" onAction="#onVarKeyReleased" onKeyTyped="#onVarKeyTyped" prefWidth="50.0" text="5" />
+      <Button mnemonicParsing="false" onAction="#onVarUpButtonClicked" prefHeight="20.0" prefWidth="20.0" text="+">
+         <HBox.margin>
+            <Insets left="10.0" />
+         </HBox.margin>
+         <font>
+            <Font size="10.0" />
+         </font>
+      </Button>
+   </HBox>
+   <HBox alignment="CENTER" layoutX="10.0" layoutY="68.0" prefHeight="50.0" prefWidth="100.0">
+      <Label text="Количество ограничений:  ">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Button mnemonicParsing="false" onAction="#onLimitDownButtonClicked" prefHeight="20.0" prefWidth="20.0" text="-">
+         <HBox.margin>
+            <Insets right="10.0" />
+         </HBox.margin>
+         <font>
+            <Font size="10.0" />
+         </font>
+      </Button>
+      <TextField fx:id="limitations" onKeyTyped="#onLimitKeyTyped" prefWidth="50.0" text="3" />
+      <Button mnemonicParsing="false" onAction="#onLimitUpButtonClicked" prefHeight="20.0" prefWidth="20.0" text="+">
+         <HBox.margin>
+            <Insets left="10.0" />
+         </HBox.margin>
+         <font>
+            <Font size="10.0" />
+         </font>
+      </Button>
+   </HBox>
+   <HBox alignment="CENTER" layoutX="10.0" layoutY="138.0" prefHeight="50.0" prefWidth="100.0">
+      <Label text="Тип задачи:  ">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <ChoiceBox fx:id="taskType" onAction="#onTypeChoiceChanged" prefWidth="150.0" value="Минимизировать">
+         <String fx:value="Максимизировать" />
+         <String fx:value="Минимизировать" />
+      </ChoiceBox>
+   </HBox>
+   <HBox alignment="CENTER" prefHeight="50.0" prefWidth="100.0">
+      <VBox.margin>
+         <Insets bottom="30.0" />
+      </VBox.margin>
+      <Label text="Способ решения:  ">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <ChoiceBox fx:id="solutionWay" onAction="#onWayChoiceChanged" prefWidth="150.0" value="Пошаговый">
+         <String fx:value="Пошаговый" />
+         <String fx:value="Автоматический" />
+      </ChoiceBox>
+   </HBox>
+   <Button mnemonicParsing="false" onAction="#onSaveButtonClicked" text="Принять" />
+</VBox>
