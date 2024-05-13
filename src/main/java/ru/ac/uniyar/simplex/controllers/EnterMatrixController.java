@@ -14,6 +14,7 @@ import ru.ac.uniyar.simplex.domain.TaskEntity;
 import ru.ac.uniyar.simplex.windows.SimplexWindow;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class EnterMatrixController {
 
@@ -149,6 +150,7 @@ public class EnterMatrixController {
                 column++;
             }
         }
+        System.out.println(Arrays.toString(function));
         return function;
     }
 
@@ -171,10 +173,12 @@ public class EnterMatrixController {
                             limitsMatrix[row][i].reduction();
                         }
                     }
+                    rowValues.clear();
                     row++;
                 }
             }
         }
+        System.out.println(Arrays.deepToString(limitsMatrix));
         return limitsMatrix;
     }
 
@@ -184,6 +188,7 @@ public class EnterMatrixController {
                 if (node instanceof CheckBox checkBox && checkBox.isSelected())
                     bases.add(GridPane.getColumnIndex(checkBox));
             }
+        System.out.println(bases);
         return bases;
     }
 }
