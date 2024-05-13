@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="370.0" prefWidth="400.0" fx:controller="ru.ac.uniyar.simplex.controllers.EnterTaskController" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1">
+<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.ac.uniyar.simplex.controllers.EnterTaskController">
    <MenuBar>
       <VBox.margin>
          <Insets bottom="20.0" />
@@ -86,7 +86,7 @@
    </HBox>
    <HBox alignment="CENTER" prefHeight="50.0" prefWidth="100.0">
       <VBox.margin>
-         <Insets bottom="30.0" />
+         <Insets bottom="5.0" />
       </VBox.margin>
       <Label text="Способ решения:  ">
          <font>
@@ -98,5 +98,13 @@
          <String fx:value="Автоматический" />
       </ChoiceBox>
    </HBox>
+   <CheckBox fx:id="autoBases" mnemonicParsing="false" text="Выбрать базисные переменные автоматически">
+      <VBox.margin>
+         <Insets bottom="30.0" />
+      </VBox.margin>
+      <font>
+         <Font size="14.0" />
+      </font>
+   </CheckBox>
    <Button mnemonicParsing="false" onAction="#onSaveButtonClicked" text="Принять" />
 </VBox>

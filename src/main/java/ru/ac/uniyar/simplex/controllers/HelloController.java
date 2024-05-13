@@ -20,7 +20,7 @@ public class HelloController {
     protected void onEnterButtonClick() {
         welcomeText.setText("Ввести вручную");
         EnterTaskWindow window = new EnterTaskWindow(primaryStage);
-        window.display();
+        window.displayEnterSettings();
     }
 
     @FXML

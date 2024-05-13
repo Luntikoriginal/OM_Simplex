@@ -1,12 +1,13 @@
 package ru.ac.uniyar.simplex.controllers;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import ru.ac.uniyar.simplex.domain.TaskEntity;
-import ru.ac.uniyar.simplex.windows.EnterMatrixWindow;
+import ru.ac.uniyar.simplex.windows.EnterTaskWindow;
 
 public class EnterTaskController {
 
@@ -34,6 +35,9 @@ public class EnterTaskController {
 
     @FXML
     private ChoiceBox<String> solutionWay;
+
+    @FXML
+    private CheckBox autoBases;
 
     // MENU
     @FXML
@@ -128,13 +132,20 @@ public class EnterTaskController {
     // SAVE BUTTON
     @FXML
     protected void onSaveButtonClicked() {
+        TaskEntity task = saveTaskSettings();
+        EnterTaskWindow window = new EnterTaskWindow(primaryStage, currentStage);
+        window.displayEnterMatrix(task);
+    }
+
+    private TaskEntity saveTaskSettings() {
         TaskEntity task = new TaskEntity();
         task.setVariables(Integer.parseInt(variables.getText()));
         task.setLimitations(Integer.parseInt(limitations.getText()));
-        if (taskType.getValue().equals("Максимизировать")) task.setTaskType("max");
-        else task.setTaskType("min");
-        task.setSolutionWay(solutionWay.getValue());
-        EnterMatrixWindow window = new EnterMatrixWindow(primaryStage, currentStage, task);
-        window.display();
+        if (taskType.getValue().equals("Минимизировать")) task.setTaskType("min");
+        else task.setTaskType("max");
+        if (solutionWay.getValue().equals("Пошаговый")) task.setSolutionWay("steps");
+        else task.setSolutionWay("auto");
+        task.setAutoBases(autoBases.isSelected());
+        return task;
     }
 }
