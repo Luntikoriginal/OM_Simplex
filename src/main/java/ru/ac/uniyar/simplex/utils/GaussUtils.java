@@ -1,6 +1,7 @@
 package ru.ac.uniyar.simplex.utils;
 
 import ru.ac.uniyar.simplex.domain.Fraction;
+import ru.ac.uniyar.simplex.exceptions.FractionCreateException;
 
 import java.util.ArrayList;
 
@@ -14,7 +15,7 @@ public class GaussUtils {
      * @param matrix матрица, в которой выполняются преобразования
      * @param bases  массив с базисными переменными
      */
-    public static void gauss(Fraction[][] matrix, ArrayList<Integer> bases) {
+    public static void gauss(Fraction[][] matrix, ArrayList<Integer> bases) throws FractionCreateException {
         int rows = matrix.length;
         int cols = matrix[0].length;
 
@@ -32,14 +33,14 @@ public class GaussUtils {
         printResult(matrix, bases);
     }
 
-    private static void divisionRow(Fraction[][] matrix, int cols, Fraction pivot, int i) {
+    private static void divisionRow(Fraction[][] matrix, int cols, Fraction pivot, int i) throws FractionCreateException {
         for (int j = 0; j < cols; j++) {
             matrix[i][j] = FractionUtils.division(matrix[i][j], pivot);
             matrix[i][j].reduction();
         }
     }
 
-    private static void differenceLines(Fraction[][] matrix, int rows, int i, int baseIndex, int cols) {
+    private static void differenceLines(Fraction[][] matrix, int rows, int i, int baseIndex, int cols) throws FractionCreateException {
         for (int k = 0; k < rows; k++) {
             if (k != i) {
                 Fraction factor = matrix[k][baseIndex];
@@ -58,7 +59,7 @@ public class GaussUtils {
      * @param matrix полученная в ходе программы матрица
      * @param bases  массив базисных переменных
      */
-    private static void printResult(Fraction[][] matrix, ArrayList<Integer> bases) {
+    private static void printResult(Fraction[][] matrix, ArrayList<Integer> bases) throws FractionCreateException {
         System.out.println("\nОтвет: ");
 
         if (isCompatibility(matrix)) return;
@@ -73,7 +74,7 @@ public class GaussUtils {
         }
     }
 
-    private static void buildResultLine(Fraction[][] matrix, int i, ArrayList<Integer> basesColumns, StringBuilder builder, Fraction constant) {
+    private static void buildResultLine(Fraction[][] matrix, int i, ArrayList<Integer> basesColumns, StringBuilder builder, Fraction constant) throws FractionCreateException {
         for (int j = 0; j < matrix[i].length - 1; j++) {
             if (!basesColumns.contains(j + 1)) {
                 Fraction coefficient = matrix[i][j];

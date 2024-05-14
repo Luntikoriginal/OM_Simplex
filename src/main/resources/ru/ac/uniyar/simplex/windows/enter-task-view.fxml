@@ -39,7 +39,7 @@
             <Font size="10.0" />
          </font>
       </Button>
-      <TextField fx:id="variables" onAction="#onVarKeyReleased" onKeyTyped="#onVarKeyTyped" prefWidth="50.0" text="5" />
+      <TextField fx:id="variables" alignment="CENTER" editable="false" prefWidth="50.0" text="5" />
       <Button mnemonicParsing="false" onAction="#onVarUpButtonClicked" prefHeight="20.0" prefWidth="20.0" text="+">
          <HBox.margin>
             <Insets left="10.0" />
@@ -63,7 +63,7 @@
             <Font size="10.0" />
          </font>
       </Button>
-      <TextField fx:id="limitations" onKeyTyped="#onLimitKeyTyped" prefWidth="50.0" text="3" />
+      <TextField fx:id="limitations" alignment="CENTER" editable="false" prefWidth="50.0" text="3" />
       <Button mnemonicParsing="false" onAction="#onLimitUpButtonClicked" prefHeight="20.0" prefWidth="20.0" text="+">
          <HBox.margin>
             <Insets left="10.0" />
@@ -79,7 +79,7 @@
             <Font size="14.0" />
          </font>
       </Label>
-      <ChoiceBox fx:id="taskType" onAction="#onTypeChoiceChanged" prefWidth="150.0" value="Минимизировать">
+      <ChoiceBox fx:id="taskType" prefWidth="150.0" value="Минимизировать">
          <String fx:value="Максимизировать" />
          <String fx:value="Минимизировать" />
       </ChoiceBox>
@@ -93,7 +93,7 @@
             <Font size="14.0" />
          </font>
       </Label>
-      <ChoiceBox fx:id="solutionWay" onAction="#onWayChoiceChanged" prefWidth="150.0" value="Пошаговый">
+      <ChoiceBox fx:id="solutionWay" prefWidth="150.0" value="Пошаговый">
          <String fx:value="Пошаговый" />
          <String fx:value="Автоматический" />
       </ChoiceBox>

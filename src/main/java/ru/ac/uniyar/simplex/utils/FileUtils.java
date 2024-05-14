@@ -4,6 +4,7 @@ import ru.ac.uniyar.simplex.domain.Fraction;
 import ru.ac.uniyar.simplex.domain.TaskEntity;
 import ru.ac.uniyar.simplex.exceptions.BasesFormatException;
 import ru.ac.uniyar.simplex.exceptions.EmptyFileException;
+import ru.ac.uniyar.simplex.exceptions.FractionCreateException;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -34,16 +35,16 @@ public class FileUtils {
 
             ArrayList<Integer> bases = getBases(data, rows, columns);
 
-            return new TaskEntity();
+            TaskEntity task = new TaskEntity();
+            task.setVariables(columns - 1);
+            task.setLimitations(rows);
+            task.setMatrix(matrix);
+            task.setBases(bases);
 
-        } catch (IOException e) {
-            System.err.println("Ошибка чтения файла: " + e.getMessage());
-        } catch (NumberFormatException e) {
-            System.err.println("Ошибка при считывании чисел: " + e.getMessage());
-        } catch (BasesFormatException e) {
-            System.err.println("Ошибка при считывании базисных переменных: " + e.getMessage());
-        } catch (EmptyFileException e) {
-            System.err.println("Недостаточно данных: " + e.getMessage());
+            return task;
+
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
         }
         return null;
     }
@@ -52,7 +53,7 @@ public class FileUtils {
         return Files.readAllLines(Path.of(filePath), StandardCharsets.UTF_8);
     }
 
-    private static Fraction[][] createMatrix(List<String> coefficients, int columns) throws NumberFormatException, EmptyFileException {
+    private static Fraction[][] createMatrix(List<String> coefficients, int columns) throws NumberFormatException, EmptyFileException, FractionCreateException {
         Fraction[][] matrix = new Fraction[coefficients.size()][];
         for (int i = 0; i < coefficients.size(); i++) {
             String[] values = coefficients.get(i).split("\\s+");
@@ -83,7 +84,7 @@ public class FileUtils {
             }
         }
         if (bases.size() != rows) {
-            throw new EmptyFileException("Кол-во базисных переменных не равно кол-ву строк матрицы!");
+            throw new BasesFormatException("Кол-во базисных переменных не равно кол-ву строк матрицы!");
         }
         return bases;
     }

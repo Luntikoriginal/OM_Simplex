@@ -8,9 +8,13 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import ru.ac.uniyar.simplex.domain.Fraction;
 import ru.ac.uniyar.simplex.domain.TaskEntity;
+import ru.ac.uniyar.simplex.exceptions.BadFieldValueException;
+import ru.ac.uniyar.simplex.exceptions.BasesFormatException;
+import ru.ac.uniyar.simplex.exceptions.FractionCreateException;
 import ru.ac.uniyar.simplex.windows.SimplexWindow;
 
 import java.util.ArrayList;
@@ -60,6 +64,7 @@ public class EnterMatrixController {
             if (i == 0) columnHeader = " ";
             else columnHeader = "x" + i;
             Label columnLabel = new Label(columnHeader);
+            columnLabel.setFont(Font.font(14));
             matrixFun.add(columnLabel, i, 0);
             GridPane.setHalignment(columnLabel, HPos.CENTER);
         }
@@ -67,14 +72,21 @@ public class EnterMatrixController {
         for (int i = 0; i <= task.getVariables() + 1; i++) {
             if (i == 0) {
                 Label rowLabel = new Label("f(x)");
+                rowLabel.setFont(Font.font(14));
                 matrixFun.add(rowLabel, i, 1);
                 GridPane.setHalignment(rowLabel, HPos.CENTER);
             } else if (i == task.getVariables() + 1) {
                 Label rowLabel = new Label("--> " + task.getTaskType());
+                rowLabel.setFont(Font.font(14));
                 matrixFun.add(rowLabel, i, 1);
             } else {
-                TextField textField = new TextField("0");
+                TextField textField = new TextField();
                 textField.setPrefWidth(50);
+                textField.textProperty().addListener((observable, oldValue, newValue) -> {
+                    if (!newValue.matches("\\d*")) {
+                        textField.setText(newValue.replaceAll("\\D", ""));
+                    }
+                });
                 matrixFun.add(textField, i, 1);
             }
         }
@@ -87,6 +99,7 @@ public class EnterMatrixController {
                     GridPane.setHalignment(checkBox, HPos.CENTER);
                 } else {
                     Label rowLabel = new Label("Базисы:");
+                    rowLabel.setFont(Font.font(14));
                     matrixFun.add(rowLabel, i, 2);
                     GridPane.setHalignment(rowLabel, HPos.CENTER);
                 }
@@ -100,6 +113,7 @@ public class EnterMatrixController {
             else if (i == task.getVariables() + 1) columnHeader = "b";
             else columnHeader = "a" + i;
             Label columnLabel = new Label(columnHeader);
+            columnLabel.setFont(Font.font(14));
             matrix.add(columnLabel, i, 0);
             GridPane.setHalignment(columnLabel, HPos.CENTER);
         }
@@ -108,12 +122,18 @@ public class EnterMatrixController {
         for (int i = 1; i <= task.getLimitations(); i++) {
             String rowHeader = "f" + i + "(x)";
             Label rowLabel = new Label(rowHeader);
+            rowLabel.setFont(Font.font(14));
             matrix.add(rowLabel, 0, i);
             GridPane.setHalignment(rowLabel, HPos.CENTER);
 
             for (int j = 1; j <= task.getVariables() + 1; j++) {
                 TextField textField = new TextField("0");
                 textField.setPrefWidth(50);
+                textField.textProperty().addListener((observable, oldValue, newValue) -> {
+                    if (!newValue.matches("\\d*")) {
+                        textField.setText(newValue.replaceAll("\\D", ""));
+                    }
+                });
                 matrix.add(textField, j, i);
             }
         }
@@ -121,25 +141,31 @@ public class EnterMatrixController {
 
     @FXML
     protected void onSaveButtonClicked() {
-        Fraction[] function = readFunction();
-        Fraction[][] limitsMatrix = readLimitsMatrix();
-        task.setFunction(function);
-        if (!task.getAutoBases()) {
-            ArrayList<Integer> bases = readBases();
-            task.setBases(bases);
+        try {
+            Fraction[] function = readFunction();
+            Fraction[][] limitsMatrix = readLimitsMatrix();
+            task.setFunction(function);
+            if (!task.getAutoBases()) {
+                ArrayList<Integer> bases = readBases();
+                task.setBases(bases);
+            }
+            task.setMatrix(limitsMatrix);
+            SimplexWindow window = new SimplexWindow(primaryStage);
+            window.display(task);
+            currentStage.close();
+        } catch (Exception e) {
+            welcomeText.setText(e.getMessage());
         }
-        task.setMatrix(limitsMatrix);
-        SimplexWindow window = new SimplexWindow(primaryStage);
-        window.display(task);
-        currentStage.close();
     }
 
-    private Fraction[] readFunction() {
+    private Fraction[] readFunction() throws BadFieldValueException, FractionCreateException {
         Fraction[] function = new Fraction[task.getVariables()];
         int column = 0;
         for (Node node : matrixFun.getChildren()) {
             if (node instanceof TextField textField) {
                 String value = textField.getText();
+                if (value.isEmpty()) throw new BadFieldValueException("Пустое поле в целевой функции!");
+                if (value.equals("0")) throw new BadFieldValueException("Коэфф целевой функции не может быть равен 0");
                 String[] fractionParts = value.split("/");
                 if (fractionParts.length == 1) {
                     function[column] = new Fraction(Integer.parseInt(fractionParts[0]), 1);
@@ -150,19 +176,23 @@ public class EnterMatrixController {
                 column++;
             }
         }
-        System.out.println(Arrays.toString(function));
+        System.out.println("Function:  " + Arrays.toString(function));
         return function;
     }
 
-    private Fraction[][] readLimitsMatrix() {
+    private Fraction[][] readLimitsMatrix() throws FractionCreateException, BadFieldValueException {
         Fraction[][] limitsMatrix = new Fraction[task.getLimitations()][];
         ArrayList<String> rowValues = new ArrayList<>();
         int row = 0;
+        boolean nonZeroRow = false;
         for (Node node : matrix.getChildren()) {
             if (node instanceof TextField textField) {
                 String value = textField.getText();
+                if (value.isEmpty()) throw new BadFieldValueException("Пустое поле в матрице ограничений!");
                 rowValues.add(value);
+                if (!value.equals("0")) nonZeroRow = true;
                 if (rowValues.size() == task.getVariables() + 1) {
+                    if (!nonZeroRow) throw new BadFieldValueException("Ограничение не может состоять из нолей!");
                     limitsMatrix[row] = new Fraction[rowValues.size()];
                     for (int i = 0; i < rowValues.size(); i++) {
                         String[] fractionParts = rowValues.get(i).split("/");
@@ -174,21 +204,24 @@ public class EnterMatrixController {
                         }
                     }
                     rowValues.clear();
+                    nonZeroRow = false;
                     row++;
                 }
             }
         }
-        System.out.println(Arrays.deepToString(limitsMatrix));
+        System.out.println("Limits:  " + Arrays.deepToString(limitsMatrix));
         return limitsMatrix;
     }
 
-    private ArrayList<Integer> readBases() {
+    private ArrayList<Integer> readBases() throws BasesFormatException {
         ArrayList<Integer> bases = new ArrayList<>();
-            for (Node node : matrixFun.getChildren()) {
-                if (node instanceof CheckBox checkBox && checkBox.isSelected())
-                    bases.add(GridPane.getColumnIndex(checkBox));
-            }
-        System.out.println(bases);
+        for (Node node : matrixFun.getChildren()) {
+            if (node instanceof CheckBox checkBox && checkBox.isSelected())
+                bases.add(GridPane.getColumnIndex(checkBox));
+        }
+        System.out.println("Bases:  " + bases);
+        if (bases.size() != task.getLimitations())
+            throw new BasesFormatException("Кол-во базисных переменных не равно кол-ву ограничений!");
         return bases;
     }
 }

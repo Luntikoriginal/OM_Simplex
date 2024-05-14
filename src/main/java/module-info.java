@@ -10,5 +10,6 @@ module ru.ac.uniyar.simplex {
     exports ru.ac.uniyar.simplex;
     exports ru.ac.uniyar.simplex.domain;
     exports ru.ac.uniyar.simplex.controllers;
+    exports ru.ac.uniyar.simplex.exceptions;
     opens ru.ac.uniyar.simplex.controllers to javafx.fxml;
 }

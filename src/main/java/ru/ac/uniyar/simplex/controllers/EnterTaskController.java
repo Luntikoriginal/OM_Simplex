@@ -59,74 +59,27 @@ public class EnterTaskController {
     @FXML
     protected void onVarDownButtonClicked() {
         int vars = Integer.parseInt(variables.getText());
-        if (vars > 2) variables.setText(String.valueOf(vars - 1));
-        welcomeText.setText(variables.getText());
-    }
-
-    @FXML
-    protected void onVarKeyTyped() {
-        String text = variables.getText();
-        if (!text.matches("\\d*")) {
-            variables.setText(text.replaceAll("\\D", ""));
-        }
-        welcomeText.setText(variables.getText());
-    }
-
-    @FXML
-    protected void onVarKeyReleased() {
-        int vars = Integer.parseInt(variables.getText());
-        if (vars < 2) variables.setText("2");
-        else if (vars > 16) variables.setText("16");
-        welcomeText.setText(variables.getText());
+        if (vars > Integer.parseInt(limitations.getText()) + 1)
+            variables.setText(String.valueOf(vars - 1));
     }
 
     @FXML
     protected void onVarUpButtonClicked() {
         int vars = Integer.parseInt(variables.getText());
         if (vars < 16) variables.setText(String.valueOf(vars + 1));
-        welcomeText.setText(variables.getText());
     }
 
     @FXML
     protected void onLimitDownButtonClicked() {
         int limits = Integer.parseInt(limitations.getText());
-        limitations.setText(String.valueOf(limits - 1));
-        welcomeText.setText(limitations.getText());
-    }
-
-    @FXML
-    protected void onLimitKeyTyped() {
-        String text = limitations.getText();
-        if (!text.matches("\\d*")) {
-            limitations.setText(text.replaceAll("\\D", ""));
-        }
-        welcomeText.setText(limitations.getText());
-    }
-
-    @FXML
-    protected void onLimitKeyReleased() {
-        int limits = Integer.parseInt(limitations.getText());
-        if (limits < 1) limitations.setText("1");
-        else if (limits > 15) limitations.setText("15");
-        welcomeText.setText(limitations.getText());
+        if (limits > 1) limitations.setText(String.valueOf(limits - 1));
     }
 
     @FXML
     protected void onLimitUpButtonClicked() {
         int limits = Integer.parseInt(limitations.getText());
-        limitations.setText(String.valueOf(limits + 1));
-        welcomeText.setText(limitations.getText());
-    }
-
-    // CHOICE BOXES
-    @FXML
-    protected void onTypeChoiceChanged() {
-        welcomeText.setText(taskType.getValue());
-    }
-
-    @FXML
-    protected void onWayChoiceChanged() {
-        welcomeText.setText(solutionWay.getValue());
+        if (limits < Integer.parseInt(variables.getText()) - 1)
+            limitations.setText(String.valueOf(limits + 1));
     }
 
     // SAVE BUTTON

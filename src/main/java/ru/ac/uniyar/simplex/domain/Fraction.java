@@ -1,11 +1,14 @@
 package ru.ac.uniyar.simplex.domain;
 
+import ru.ac.uniyar.simplex.exceptions.FractionCreateException;
+
 public class Fraction {
 
     private int numerator;
     private int denominator;
 
-    public Fraction(int numerator, int denominator) {
+    public Fraction(int numerator, int denominator) throws FractionCreateException {
+        if (denominator == 0) throw new FractionCreateException("Знаменатель дроби не может быть равен 0");
         this.numerator = numerator;
         this.denominator = denominator;
     }
@@ -56,7 +59,7 @@ public class Fraction {
         this.denominator = denominator;
     }
 
-    public Fraction abs() {
+    public Fraction abs() throws FractionCreateException {
         return new Fraction(Math.abs(numerator), denominator);
     }
 }

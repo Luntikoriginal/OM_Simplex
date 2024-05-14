@@ -22,7 +22,7 @@
   </MenuBar>
    <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0" spacing="50.0">
       <children>
-        <Label fx:id="welcomeText" alignment="CENTER" text="Введите матрицу">
+        <Label fx:id="welcomeText" alignment="CENTER" contentDisplay="CENTER" text="Введите матрицу">
           <font>
             <Font size="18.0" />
           </font>
