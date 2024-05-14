@@ -1,0 +1,52 @@
+{
+  "variables" : 4,
+  "limitations" : 2,
+  "taskType" : "min",
+  "solutionWay" : "steps",
+  "autoBases" : false,
+  "function" : [ {
+    "numerator" : -2,
+    "denominator" : 1
+  }, {
+    "numerator" : -1,
+    "denominator" : 1
+  }, {
+    "numerator" : -3,
+    "denominator" : 1
+  }, {
+    "numerator" : 1,
+    "denominator" : 1
+  } ],
+  "bases" : [ 3, 4 ],
+  "matrix" : [ [ {
+    "numerator" : 1,
+    "denominator" : 1
+  }, {
+    "numerator" : 2,
+    "denominator" : 1
+  }, {
+    "numerator" : 5,
+    "denominator" : 1
+  }, {
+    "numerator" : -1,
+    "denominator" : 1
+  }, {
+    "numerator" : 4,
+    "denominator" : 1
+  } ], [ {
+    "numerator" : 1,
+    "denominator" : 1
+  }, {
+    "numerator" : -1,
+    "denominator" : 1
+  }, {
+    "numerator" : -1,
+    "denominator" : 1
+  }, {
+    "numerator" : 2,
+    "denominator" : 1
+  }, {
+    "numerator" : 1,
+    "denominator" : 1
+  } ] ]
+}

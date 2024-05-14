@@ -29,7 +29,7 @@ public class EnterTaskWindow {
 
     public void displayEnterSettings() {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("enter-task-view.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("enter-settings-view.fxml"));
             Scene scene = new Scene(fxmlLoader.load());
             currentStage.setTitle("Simplex - ввод настроек");
             currentStage.setScene(scene);

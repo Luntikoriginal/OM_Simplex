@@ -8,6 +8,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import ru.ac.uniyar.simplex.domain.Fraction;
@@ -15,6 +16,7 @@ import ru.ac.uniyar.simplex.domain.TaskEntity;
 import ru.ac.uniyar.simplex.exceptions.BadFieldValueException;
 import ru.ac.uniyar.simplex.exceptions.BasesFormatException;
 import ru.ac.uniyar.simplex.exceptions.FractionCreateException;
+import ru.ac.uniyar.simplex.utils.FileUtils;
 import ru.ac.uniyar.simplex.windows.SimplexWindow;
 
 import java.util.ArrayList;
@@ -46,7 +48,6 @@ public class EnterMatrixController {
 
     @FXML
     private GridPane matrix;
-
 
     @FXML
     private Label welcomeText;
@@ -83,8 +84,8 @@ public class EnterMatrixController {
                 TextField textField = new TextField();
                 textField.setPrefWidth(50);
                 textField.textProperty().addListener((observable, oldValue, newValue) -> {
-                    if (!newValue.matches("\\d*")) {
-                        textField.setText(newValue.replaceAll("\\D", ""));
+                    if (!newValue.matches("-?\\d*")) {
+                        textField.setText(newValue.replaceAll("[^\\d-]", ""));
                     }
                 });
                 matrixFun.add(textField, i, 1);
@@ -130,8 +131,8 @@ public class EnterMatrixController {
                 TextField textField = new TextField("0");
                 textField.setPrefWidth(50);
                 textField.textProperty().addListener((observable, oldValue, newValue) -> {
-                    if (!newValue.matches("\\d*")) {
-                        textField.setText(newValue.replaceAll("\\D", ""));
+                    if (!newValue.matches("-?\\d*")) {
+                        textField.setText(newValue.replaceAll("[^\\d-]", ""));
                     }
                 });
                 matrix.add(textField, j, i);
@@ -150,10 +151,12 @@ public class EnterMatrixController {
                 task.setBases(bases);
             }
             task.setMatrix(limitsMatrix);
-            SimplexWindow window = new SimplexWindow(primaryStage);
+            SimplexWindow window = new SimplexWindow();
             window.display(task);
             currentStage.close();
+            primaryStage.close();
         } catch (Exception e) {
+            welcomeText.setTextFill(Color.RED);
             welcomeText.setText(e.getMessage());
         }
     }
@@ -188,11 +191,13 @@ public class EnterMatrixController {
         for (Node node : matrix.getChildren()) {
             if (node instanceof TextField textField) {
                 String value = textField.getText();
-                if (value.isEmpty()) throw new BadFieldValueException("Пустое поле в матрице ограничений!");
+                if (value.isEmpty())
+                    throw new BadFieldValueException("Пустое поле в матрице ограничений!");
                 rowValues.add(value);
                 if (!value.equals("0")) nonZeroRow = true;
                 if (rowValues.size() == task.getVariables() + 1) {
-                    if (!nonZeroRow) throw new BadFieldValueException("Ограничение не может состоять из нолей!");
+                    if (!nonZeroRow)
+                        throw new BadFieldValueException("Ограничение " + (row + 1) + " не может состоять из нолей!");
                     limitsMatrix[row] = new Fraction[rowValues.size()];
                     for (int i = 0; i < rowValues.size(); i++) {
                         String[] fractionParts = rowValues.get(i).split("/");
@@ -221,7 +226,7 @@ public class EnterMatrixController {
         }
         System.out.println("Bases:  " + bases);
         if (bases.size() != task.getLimitations())
-            throw new BasesFormatException("Кол-во базисных переменных не равно кол-ву ограничений!");
+            throw new BasesFormatException("Кол-во базисных переменных должно быть равно кол-ву ограничений!");
         return bases;
     }
 }

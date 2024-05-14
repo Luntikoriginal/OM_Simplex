@@ -7,6 +7,8 @@ public class Fraction {
     private int numerator;
     private int denominator;
 
+    public Fraction() {}
+
     public Fraction(int numerator, int denominator) throws FractionCreateException {
         if (denominator == 0) throw new FractionCreateException("Знаменатель дроби не может быть равен 0");
         this.numerator = numerator;

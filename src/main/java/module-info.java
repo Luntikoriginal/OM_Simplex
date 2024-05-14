@@ -5,6 +5,7 @@ module ru.ac.uniyar.simplex {
     requires org.controlsfx.controls;
     requires com.dlsc.formsfx;
     requires org.kordamp.bootstrapfx.core;
+    requires com.fasterxml.jackson.databind;
 
     opens ru.ac.uniyar.simplex to javafx.fxml;
     exports ru.ac.uniyar.simplex;

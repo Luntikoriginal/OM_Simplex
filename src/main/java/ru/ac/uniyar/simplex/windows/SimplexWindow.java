@@ -11,20 +11,16 @@ import java.io.IOException;
 
 public class SimplexWindow {
 
-    private Stage primaryStage;
-
-    public SimplexWindow(Stage primaryStage) {
-        this.primaryStage = primaryStage;
-    }
-
     public void display(TaskEntity task) {
         try {
+            Stage primaryStage = new Stage();
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("simplex-view.fxml"));
             Scene scene = new Scene(fxmlLoader.load());
             primaryStage.setTitle("Simplex - ввод настроек");
             primaryStage.setScene(scene);
             SimplexController controller = fxmlLoader.getController();
             controller.setProperties(primaryStage);
+            primaryStage.show();
         } catch (IOException e) {
             e.printStackTrace();
         }

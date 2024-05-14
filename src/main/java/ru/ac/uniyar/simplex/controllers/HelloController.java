@@ -3,7 +3,13 @@ package ru.ac.uniyar.simplex.controllers;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
+import ru.ac.uniyar.simplex.domain.TaskEntity;
+import ru.ac.uniyar.simplex.utils.FileUtils;
 import ru.ac.uniyar.simplex.windows.EnterTaskWindow;
+import ru.ac.uniyar.simplex.windows.SimplexWindow;
+
+import java.io.IOException;
+import java.util.Arrays;
 
 public class HelloController {
 
@@ -24,8 +30,12 @@ public class HelloController {
     }
 
     @FXML
-    protected void onDownloadButtonClick() {
-        welcomeText.setText("Загрузить из файла");
+    protected void onDownloadButtonClick() throws IOException {
+        TaskEntity task = FileUtils.readTaskFromJSON();
+        System.out.println(Arrays.deepToString(task.getMatrix()));
+        SimplexWindow window = new SimplexWindow();
+        window.display(task);
+        primaryStage.close();
     }
 
     @FXML

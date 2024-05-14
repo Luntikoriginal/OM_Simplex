@@ -12,14 +12,14 @@ public class HelloWindow {
 
     public void display() {
         try {
-            Stage stage = new Stage();
+            Stage primaryStage = new Stage();
             FXMLLoader fxmlLoader = new FXMLLoader(HelloWindow.class.getResource("hello-view.fxml"));
             Scene scene = new Scene(fxmlLoader.load());
-            stage.setTitle("Simplex");
-            stage.setScene(scene);
+            primaryStage.setTitle("Simplex");
+            primaryStage.setScene(scene);
             HelloController controller = fxmlLoader.getController();
-            controller.setProperties(stage);
-            stage.show();
+            controller.setProperties(primaryStage);
+            primaryStage.show();
         } catch (IOException e) {
             e.printStackTrace();
         }
