@@ -3,14 +3,32 @@
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
+<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" fx:controller="ru.ac.uniyar.simplex.controllers.SimplexController" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1">
+   <MenuBar>
+      <VBox.margin>
+         <Insets bottom="15.0" />
+      </VBox.margin>
+      <Menu mnemonicParsing="false" text="File">
+         <MenuItem mnemonicParsing="false" text="Close" />
+      </Menu>
+      <Menu mnemonicParsing="false" text="Edit">
+         <MenuItem mnemonicParsing="false" text="Delete" />
+      </Menu>
+      <Menu mnemonicParsing="false" text="Help">
+         <MenuItem mnemonicParsing="false" text="About" />
+      </Menu>
+   </MenuBar>
+   <Label fx:id="welcomeText" text="Симплекс метод">
+      <font>
+         <Font size="14.0" />
+      </font>
+      <padding>
+         <Insets bottom="10.0" />
+      </padding>
+   </Label>
+   <GridPane fx:id="table">
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.ac.uniyar.simplex.controllers.SimplexController">
-   <top>
-      <Label alignment="CENTER" contentDisplay="CENTER" text="ХУЙ" BorderPane.alignment="CENTER">
-         <BorderPane.margin>
-            <Insets top="30.0" />
-         </BorderPane.margin>
-      </Label>
-   </top>
-</BorderPane>
+   </GridPane>
+</VBox>

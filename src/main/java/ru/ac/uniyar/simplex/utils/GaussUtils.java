@@ -4,33 +4,38 @@ import ru.ac.uniyar.simplex.domain.Fraction;
 import ru.ac.uniyar.simplex.exceptions.FractionCreateException;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class GaussUtils {
 
-    /**
-     * Метод преобразования минора к диагональному виду методом Гаусса.
-     * По очереди берет базисный элемент, делит на него строку и вычитает
-     * получившуюся строку из всех других необходимое кол-во раз.
-     *
-     * @param matrix матрица, в которой выполняются преобразования
-     * @param bases  массив с базисными переменными
-     */
-    public static void gauss(Fraction[][] matrix, ArrayList<Integer> bases) throws FractionCreateException {
-        int rows = matrix.length;
-        int cols = matrix[0].length;
+    public static Fraction[][] gauss(Fraction[][] originalMatrix, ArrayList<Integer> bases) throws FractionCreateException {
+        int rows = originalMatrix.length;
+        int cols = originalMatrix[0].length;
+
+        Fraction[][] newMatrix = deepCopyMatrix(originalMatrix);
 
         for (int i = 0; i < rows; i++) {
             int baseIndex = bases.get(i) - 1;
-            Fraction pivot = matrix[i][baseIndex];
+            Fraction pivot = newMatrix[i][baseIndex];
 
             if (pivot.getNumerator() != 0) {
-                divisionRow(matrix, cols, pivot, i);
+                divisionRow(newMatrix, cols, pivot, i);
             }
 
-            differenceLines(matrix, rows, i, baseIndex, cols);
+            differenceLines(newMatrix, rows, i, baseIndex, cols);
         }
+        return newMatrix;
+    }
 
-        printResult(matrix, bases);
+    private static Fraction[][] deepCopyMatrix(Fraction[][] originalMatrix) throws FractionCreateException {
+        Fraction[][] newMatrix = new Fraction[originalMatrix.length][];
+        for (int i = 0; i < originalMatrix.length; i++) {
+            newMatrix[i] = new Fraction[originalMatrix[i].length];
+            for (int j = 0; j < originalMatrix[i].length; j++) {
+                newMatrix[i][j] = new Fraction(originalMatrix[i][j].getNumerator(), originalMatrix[i][j].getDenominator());
+            }
+        }
+        return newMatrix;
     }
 
     private static void divisionRow(Fraction[][] matrix, int cols, Fraction pivot, int i) throws FractionCreateException {
@@ -52,13 +57,6 @@ public class GaussUtils {
         }
     }
 
-    /**
-     * Печатает результат программы, выражая базисные переменные.
-     * Дополнительно проверят совместность системы.
-     *
-     * @param matrix полученная в ходе программы матрица
-     * @param bases  массив базисных переменных
-     */
     private static void printResult(Fraction[][] matrix, ArrayList<Integer> bases) throws FractionCreateException {
         System.out.println("\nОтвет: ");
 

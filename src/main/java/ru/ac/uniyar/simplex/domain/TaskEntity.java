@@ -1,5 +1,6 @@
 package ru.ac.uniyar.simplex.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class TaskEntity {
@@ -16,20 +17,9 @@ public class TaskEntity {
 
     private Fraction[] function;
 
-    private List<Integer> bases;
+    private ArrayList<Integer> bases;
 
     private Fraction[][] limitsMatrix;
-
-    public void refresh() {
-        variables = null;
-        limitations = null;
-        taskType = null;
-        solutionWay = null;
-        autoBases = null;
-        function = null;
-        bases = null;
-        limitsMatrix = null;
-    }
 
     public Integer getVariables() {
         return variables;
@@ -87,11 +77,11 @@ public class TaskEntity {
         this.function = function;
     }
 
-    public List<Integer> getBases() {
+    public ArrayList<Integer> getBases() {
         return bases;
     }
 
-    public void setBases(List<Integer> bases) {
+    public void setBases(ArrayList<Integer> bases) {
         this.bases = bases;
     }
 }

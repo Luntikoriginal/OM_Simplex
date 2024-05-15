@@ -32,7 +32,6 @@ public class HelloController {
     @FXML
     protected void onDownloadButtonClick() throws IOException {
         TaskEntity task = FileUtils.readTaskFromJSON();
-        System.out.println(Arrays.deepToString(task.getMatrix()));
         SimplexWindow window = new SimplexWindow();
         window.display(task);
         primaryStage.close();

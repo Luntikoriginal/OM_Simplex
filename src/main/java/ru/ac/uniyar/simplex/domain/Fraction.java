@@ -34,6 +34,11 @@ public class Fraction {
         denominator *= i;
     }
 
+    public Fraction multiply(int i) throws FractionCreateException {
+        int newNumerator = numerator * i;
+        return new Fraction(newNumerator, denominator);
+    }
+
     @Override
     public String toString() {
         if (numerator == 0) {

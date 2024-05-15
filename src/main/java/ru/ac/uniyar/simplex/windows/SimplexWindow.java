@@ -19,7 +19,7 @@ public class SimplexWindow {
             primaryStage.setTitle("Simplex - ввод настроек");
             primaryStage.setScene(scene);
             SimplexController controller = fxmlLoader.getController();
-            controller.setProperties(primaryStage);
+            controller.setProperties(primaryStage, task);
             primaryStage.show();
         } catch (IOException e) {
             e.printStackTrace();
