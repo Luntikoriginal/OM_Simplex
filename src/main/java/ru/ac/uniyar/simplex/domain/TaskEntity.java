@@ -1,24 +1,16 @@
 package ru.ac.uniyar.simplex.domain;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class TaskEntity {
 
     private Integer variables;
-
     private Integer limitations;
-
     private String taskType;
-
     private String solutionWay;
-
     private Boolean autoBases;
-
     private Fraction[] function;
-
     private ArrayList<Integer> bases;
-
     private Fraction[][] limitsMatrix;
 
     public Integer getVariables() {

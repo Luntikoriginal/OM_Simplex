@@ -7,15 +7,17 @@ public class Fraction {
     private int numerator;
     private int denominator;
 
-    public Fraction() {}
+    public Fraction() {
+    }
 
     public Fraction(int numerator, int denominator) throws FractionCreateException {
         if (denominator == 0) throw new FractionCreateException("Знаменатель дроби не может быть равен 0");
         this.numerator = numerator;
         this.denominator = denominator;
+        this.reduction();
     }
 
-    public void reduction() {
+    public Fraction reduction() {
         if ((numerator < 0 && denominator < 0) || (numerator > 0 && denominator < 0)) {
             numerator *= -1;
             denominator *= -1;
@@ -27,6 +29,7 @@ public class Fraction {
                 i = 1;
             }
         }
+        return this;
     }
 
     public void multiple(int i) {

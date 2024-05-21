@@ -1,67 +1,53 @@
 package ru.ac.uniyar.simplex.domain;
 
+import javafx.geometry.Point2D;
 import ru.ac.uniyar.simplex.exceptions.FractionCreateException;
-import ru.ac.uniyar.simplex.utils.FractionUtils;
+import ru.ac.uniyar.simplex.utils.SimplexUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-
-import static ru.ac.uniyar.simplex.utils.FractionUtils.amount;
-import static ru.ac.uniyar.simplex.utils.FractionUtils.multiplication;
+import java.util.Map;
 
 public class SimplexEntity {
 
     private ArrayList<Integer> bV;  //basesVars
-
     private ArrayList<Integer> fV;  //freeVars
-
     private Fraction[][] sT;  //simplexTable
-
+    private ArrayList<Point2D> pF; //possibleFields
     private HashMap<Integer, Fraction> base;
 
     public SimplexEntity(TaskEntity task, Fraction[][] gMatrix) throws FractionCreateException {
         bV = new ArrayList<>(task.getBases());
-        fV = new ArrayList<>();
-        base = new HashMap<>();
-        int k = 0;
-        for (int i = 1; i <= task.getVariables(); i++) {
-            if (!bV.contains(i)) {
-                fV.add(i);
-                base.put(i, new Fraction(0, 1));
-            } else {
-                base.put(i, gMatrix[k][task.getVariables()]);
-                k++;
-            }
-
-        }
-        createST(gMatrix, task.getFunction());
+        SimplexUtils.createFVAndBases(task, gMatrix, this);
+        SimplexUtils.createST(gMatrix, task.getFunction(), this);
+        SimplexUtils.findPossibleFields(this);
     }
 
-    private void createST(Fraction[][] gMatrix, Fraction[] originalFunc) throws FractionCreateException {
-        sT = new Fraction[bV.size() + 1][fV.size() + 1];
-        for (int i = 0; i < gMatrix.length; i++) {
-            int k = 0;
-            for (int j = 0; j < gMatrix[i].length; j++) {
-                if (!bV.contains(j + 1)) {
-                    sT[i][k] = gMatrix[i][j];
-                    k++;
-                }
+    public SimplexEntity(SimplexEntity oldSE) throws FractionCreateException {
+        this.bV = new ArrayList<>(oldSE.bV);
+        this.fV = new ArrayList<>(oldSE.fV);
+        this.pF = new ArrayList<>(oldSE.pF);
+        int rows = oldSE.sT.length;
+        int cols = oldSE.sT[0].length;
+        this.sT = new Fraction[rows][cols];
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                this.sT[i][j] = new Fraction(oldSE.sT[i][j].getNumerator(), oldSE.sT[i][j].getDenominator());
             }
         }
-        for (int i = 0; i < sT[bV.size()].length; i++) {
-            Fraction sum = new Fraction(0, 1);
-            if (i != sT[bV.size()].length - 1) {
-                for (int j = 0; j < sT.length - 1; j++) {
-                    sum = amount(sum, multiplication(sT[j][i].multiply(-1), originalFunc[bV.get(j) - 1]));
-                }
-                sT[bV.size()][i] = amount(originalFunc[fV.get(i) - 1], sum);
-            } else {
-                for (int j = 0; j < sT.length - 1; j++) {
-                    sum = amount(sum, multiplication(sT[j][i], originalFunc[bV.get(j) - 1]));
-                }
-                sT[bV.size()][i] = sum.multiply(-1);
+        this.base = new HashMap<>();
+        for (Map.Entry<Integer, Fraction> entry : oldSE.base.entrySet()) {
+            this.base.put(entry.getKey(), new Fraction(entry.getValue().getNumerator(), entry.getValue().getDenominator()));
+        }
+    }
+
+    public boolean containsPoint(int x, int y) {
+        for (Point2D point : pF) {
+            if (point.getX() == x && point.getY() == y) {
+                return true;
             }
         }
+        return false;
     }
 
     public ArrayList<Integer> getBV() {
@@ -94,5 +80,13 @@ public class SimplexEntity {
 
     public void setBase(HashMap<Integer, Fraction> base) {
         this.base = base;
+    }
+
+    public ArrayList<Point2D> getPF() {
+        return pF;
+    }
+
+    public void setPF(ArrayList<Point2D> pF) {
+        this.pF = pF;
     }
 }

@@ -9,18 +9,17 @@ import ru.ac.uniyar.simplex.windows.EnterTaskWindow;
 import ru.ac.uniyar.simplex.windows.SimplexWindow;
 
 import java.io.IOException;
-import java.util.Arrays;
 
 public class HelloController {
 
     private Stage primaryStage;
 
+    @FXML
+    private Label welcomeText;
+
     public void setProperties(Stage primaryStage) {
         this.primaryStage = primaryStage;
     }
-
-    @FXML
-    private Label welcomeText;
 
     @FXML
     protected void onEnterButtonClick() {

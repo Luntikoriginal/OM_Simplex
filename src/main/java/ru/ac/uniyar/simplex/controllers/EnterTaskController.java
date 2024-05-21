@@ -12,32 +12,25 @@ import ru.ac.uniyar.simplex.windows.EnterTaskWindow;
 public class EnterTaskController {
 
     private Stage currentStage;
-
     private Stage primaryStage;
+
+    @FXML
+    private Label welcomeText;
+    @FXML
+    private TextField variables;
+    @FXML
+    private TextField limitations;
+    @FXML
+    private ChoiceBox<String> taskType;
+    @FXML
+    private ChoiceBox<String> solutionWay;
+    @FXML
+    private CheckBox autoBases;
 
     public void setProperties(Stage primaryStage, Stage currentStage) {
         this.primaryStage = primaryStage;
         this.currentStage = currentStage;
     }
-
-    // OBJECTS
-    @FXML
-    private Label welcomeText;
-
-    @FXML
-    private TextField variables;
-
-    @FXML
-    private TextField limitations;
-
-    @FXML
-    private ChoiceBox<String> taskType;
-
-    @FXML
-    private ChoiceBox<String> solutionWay;
-
-    @FXML
-    private CheckBox autoBases;
 
     // MENU
     @FXML

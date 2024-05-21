@@ -4,7 +4,6 @@ import ru.ac.uniyar.simplex.domain.Fraction;
 import ru.ac.uniyar.simplex.exceptions.FractionCreateException;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class GaussUtils {
 
@@ -41,7 +40,6 @@ public class GaussUtils {
     private static void divisionRow(Fraction[][] matrix, int cols, Fraction pivot, int i) throws FractionCreateException {
         for (int j = 0; j < cols; j++) {
             matrix[i][j] = FractionUtils.division(matrix[i][j], pivot);
-            matrix[i][j].reduction();
         }
     }
 
@@ -51,7 +49,6 @@ public class GaussUtils {
                 Fraction factor = matrix[k][baseIndex];
                 for (int j = 0; j < cols; j++) {
                     matrix[k][j] = FractionUtils.difference(matrix[k][j], FractionUtils.multiplication(factor, matrix[i][j]));
-                    matrix[k][j].reduction();
                 }
             }
         }

@@ -16,7 +16,6 @@ import ru.ac.uniyar.simplex.domain.TaskEntity;
 import ru.ac.uniyar.simplex.exceptions.BadFieldValueException;
 import ru.ac.uniyar.simplex.exceptions.BasesFormatException;
 import ru.ac.uniyar.simplex.exceptions.FractionCreateException;
-import ru.ac.uniyar.simplex.utils.FileUtils;
 import ru.ac.uniyar.simplex.windows.SimplexWindow;
 
 import java.util.ArrayList;
@@ -25,10 +24,19 @@ import java.util.Arrays;
 public class EnterMatrixController {
 
     private Stage primaryStage;
-
     private Stage currentStage;
-
     private TaskEntity task;
+
+    @FXML
+    private Button headButton;
+    @FXML
+    private Button bottomButton;
+    @FXML
+    private GridPane matrixFun;
+    @FXML
+    private GridPane matrix;
+    @FXML
+    private Label welcomeText;
 
     public void setProperties(Stage primaryStage, Stage currentStage, TaskEntity task) {
         this.primaryStage = primaryStage;
@@ -37,21 +45,6 @@ public class EnterMatrixController {
         initialize();
     }
 
-    @FXML
-    private Button headButton;
-
-    @FXML
-    private Button bottomButton;
-
-    @FXML
-    private GridPane matrixFun;
-
-    @FXML
-    private GridPane matrix;
-
-    @FXML
-    private Label welcomeText;
-
     private void initialize() {
 
         if (task.getLimitations() > 12) {
@@ -59,7 +52,8 @@ public class EnterMatrixController {
             headButton.setVisible(true);
         }
 
-        // f(x) table
+        // F(x) TABLE
+        // header
         for (int i = 0; i <= task.getVariables(); i++) {
             String columnHeader;
             if (i == 0) columnHeader = " ";
@@ -70,6 +64,7 @@ public class EnterMatrixController {
             GridPane.setHalignment(columnLabel, HPos.CENTER);
         }
 
+        // text fields
         for (int i = 0; i <= task.getVariables() + 1; i++) {
             if (i == 0) {
                 Label rowLabel = new Label("f(x)");
@@ -84,14 +79,15 @@ public class EnterMatrixController {
                 TextField textField = new TextField();
                 textField.setPrefWidth(50);
                 textField.textProperty().addListener((observable, oldValue, newValue) -> {
-                    if (!newValue.matches("-?\\d*")) {
-                        textField.setText(newValue.replaceAll("[^\\d-]", ""));
+                    if (!newValue.matches("-?\\d*/?\\d*")) {
+                        textField.setText(oldValue);
                     }
                 });
                 matrixFun.add(textField, i, 1);
             }
         }
 
+        // check boxes
         if (!task.getAutoBases()) {
             for (int i = 0; i <= task.getVariables(); i++) {
                 if (i != 0) {
@@ -107,7 +103,8 @@ public class EnterMatrixController {
             }
         }
 
-        // Fi(x) table
+        // Fi(x) TABLE
+        // header
         for (int i = 0; i <= task.getVariables() + 1; i++) {
             String columnHeader;
             if (i == 0) columnHeader = " ";
@@ -119,7 +116,7 @@ public class EnterMatrixController {
             GridPane.setHalignment(columnLabel, HPos.CENTER);
         }
 
-
+        // text fields
         for (int i = 1; i <= task.getLimitations(); i++) {
             String rowHeader = "f" + i + "(x)";
             Label rowLabel = new Label(rowHeader);
@@ -131,8 +128,8 @@ public class EnterMatrixController {
                 TextField textField = new TextField("0");
                 textField.setPrefWidth(50);
                 textField.textProperty().addListener((observable, oldValue, newValue) -> {
-                    if (!newValue.matches("-?\\d*")) {
-                        textField.setText(newValue.replaceAll("[^\\d-]", ""));
+                    if (!newValue.matches("-?\\d*/?\\d*")) {
+                        textField.setText(oldValue);
                     }
                 });
                 matrix.add(textField, j, i);
@@ -174,7 +171,6 @@ public class EnterMatrixController {
                     function[column] = new Fraction(Integer.parseInt(fractionParts[0]), 1);
                 } else {
                     function[column] = new Fraction(Integer.parseInt(fractionParts[0]), Integer.parseInt(fractionParts[1]));
-                    function[column].reduction();
                 }
                 column++;
             }
@@ -205,7 +201,6 @@ public class EnterMatrixController {
                             limitsMatrix[row][i] = new Fraction(Integer.parseInt(fractionParts[0]), 1);
                         } else {
                             limitsMatrix[row][i] = new Fraction(Integer.parseInt(fractionParts[0]), Integer.parseInt(fractionParts[1]));
-                            limitsMatrix[row][i].reduction();
                         }
                     }
                     rowValues.clear();
