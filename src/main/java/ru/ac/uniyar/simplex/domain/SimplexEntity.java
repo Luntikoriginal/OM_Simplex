@@ -19,7 +19,7 @@ public class SimplexEntity {
     public SimplexEntity(TaskEntity task, Fraction[][] gMatrix) throws FractionCreateException {
         bV = new ArrayList<>(task.getBases());
         SimplexUtils.createFVAndBases(task, gMatrix, this);
-        SimplexUtils.createST(gMatrix, task.getFunction(), this);
+        SimplexUtils.createST(gMatrix, task.getFunction(), task.getTaskType(), this);
         SimplexUtils.findPossibleFields(this);
     }
 

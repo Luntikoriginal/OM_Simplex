@@ -42,6 +42,12 @@ public class Fraction {
         return new Fraction(newNumerator, denominator);
     }
 
+    public void swapND() {
+        int temp = numerator;
+        numerator = denominator;
+        denominator = temp;
+    }
+
     @Override
     public String toString() {
         if (numerator == 0) {

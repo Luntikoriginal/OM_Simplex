@@ -15,27 +15,23 @@ public class EnterTaskWindow {
 
     private final Stage primaryStage;
 
-    private final Stage currentStage;
-
-    public EnterTaskWindow(Stage primaryStage) {
-        this.primaryStage = primaryStage;
-        currentStage = new Stage();
+    public EnterTaskWindow() {
+        primaryStage = new Stage();
     }
 
-    public EnterTaskWindow(Stage primaryStage, Stage currentStage) {
-        this.primaryStage = primaryStage;
-        this.currentStage = currentStage;
+    public EnterTaskWindow(Stage currentStage) {
+        this.primaryStage = currentStage;
     }
 
     public void displayEnterSettings() {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("enter-settings-view.fxml"));
             Scene scene = new Scene(fxmlLoader.load());
-            currentStage.setTitle("Simplex - ввод настроек");
-            currentStage.setScene(scene);
+            primaryStage.setTitle("Simplex - ввод настроек");
+            primaryStage.setScene(scene);
             EnterTaskController controller = fxmlLoader.getController();
-            controller.setProperties(primaryStage, currentStage);
-            currentStage.show();
+            controller.setProperties(primaryStage);
+            primaryStage.show();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -45,20 +41,20 @@ public class EnterTaskWindow {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("enter-matrix-view.fxml"));
             Scene scene = new Scene(fxmlLoader.load());
-            currentStage.setTitle("Simplex - ввод матрицы");
-            currentStage.setScene(scene);
+            primaryStage.setTitle("Simplex - ввод матрицы");
+            primaryStage.setScene(scene);
 
             Screen screen = Screen.getPrimary();
             Rectangle2D bounds = screen.getVisualBounds();
 
-            double centerXPosition = bounds.getMinX() + (bounds.getWidth() - currentStage.getWidth()) / 2;
-            double centerYPosition = bounds.getMinY() + (bounds.getHeight() - currentStage.getHeight()) / 2;
+            double centerXPosition = bounds.getMinX() + (bounds.getWidth() - primaryStage.getWidth()) / 2;
+            double centerYPosition = bounds.getMinY() + (bounds.getHeight() - primaryStage.getHeight()) / 2;
 
-            currentStage.setX(centerXPosition);
-            currentStage.setY(centerYPosition);
+            primaryStage.setX(centerXPosition);
+            primaryStage.setY(centerYPosition);
 
             EnterMatrixController controller = fxmlLoader.getController();
-            controller.setProperties(primaryStage, currentStage, task);
+            controller.setProperties(primaryStage, task);
         } catch (IOException e) {
             e.printStackTrace();
         }

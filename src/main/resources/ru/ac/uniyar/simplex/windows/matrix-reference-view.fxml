@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<VBox xmlns:fx="http://javafx.com/fxml/1" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+      minWidth="-Infinity" prefHeight="350.0" prefWidth="600.0"
+      xmlns="http://javafx.com/javafx/11.0.14-internal">
+    <padding>
+        <Insets top="20.0"/>
+    </padding>
+    <Label text="Ввод матрицы - справка">
+        <font>
+            <Font size="18.0"/>
+        </font>
+        <VBox.margin>
+            <Insets bottom="20.0"/>
+        </VBox.margin>
+    </Label>
+    <Label prefWidth="520.0"
+           text="1. Вводимые данные поддерживаются, как целые числа (19), так и обыкновенные дроби (-19/2)"
+           wrapText="true">
+        <VBox.margin>
+            <Insets bottom="10.0"/>
+        </VBox.margin>
+        <font>
+            <Font size="13.0"/>
+        </font>
+    </Label>
+    <Label layoutX="161.0" layoutY="57.0" prefWidth="520.0" text="2. Целевая функция не может содержать пустых ячеек"
+           wrapText="true">
+        <VBox.margin>
+            <Insets bottom="10.0"/>
+        </VBox.margin>
+        <font>
+            <Font size="13.0"/>
+        </font>
+    </Label>
+    <Label layoutX="160.0" layoutY="74.0" prefWidth="520.0"
+           text="3. Значения коэффициентов целевой функции должны быть отличны от нуля" wrapText="true">
+        <VBox.margin>
+            <Insets bottom="10.0"/>
+        </VBox.margin>
+        <font>
+            <Font size="13.0"/>
+        </font>
+    </Label>
+    <Label layoutX="108.0" layoutY="91.0" prefWidth="520.0"
+           text="4. Матрица ограничений не может содеражать пустых ячеек" wrapText="true">
+        <VBox.margin>
+            <Insets bottom="10.0"/>
+        </VBox.margin>
+        <font>
+            <Font size="13.0"/>
+        </font>
+    </Label>
+    <Label layoutX="56.0" layoutY="120.0" prefWidth="520.0"
+           text="5. Каждая строка в матрице ограничений, должна содержать минимум один ненулевой элемент"
+           wrapText="true">
+        <VBox.margin>
+            <Insets bottom="10.0"/>
+        </VBox.margin>
+        <font>
+            <Font size="13.0"/>
+        </font>
+    </Label>
+    <Label layoutX="100.0" layoutY="138.0" prefWidth="520.0"
+           text="6. Количество выбранных базисных переменных должно быть равно количеству ограничений" wrapText="true">
+        <VBox.margin>
+            <Insets bottom="10.0"/>
+        </VBox.margin>
+        <font>
+            <Font size="13.0"/>
+        </font>
+    </Label>
+</VBox>

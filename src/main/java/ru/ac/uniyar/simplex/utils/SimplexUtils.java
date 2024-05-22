@@ -8,16 +8,19 @@ import ru.ac.uniyar.simplex.exceptions.FractionCreateException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
-import static ru.ac.uniyar.simplex.utils.FractionUtils.amount;
-import static ru.ac.uniyar.simplex.utils.FractionUtils.multiplication;
+import static ru.ac.uniyar.simplex.utils.FractionUtils.*;
 
 public class SimplexUtils {
 
-    public static void createST(Fraction[][] gMatrix, Fraction[] originalFunc, SimplexEntity se) throws FractionCreateException {
+    public static void createST(Fraction[][] gMatrix, Fraction[] originalFunc, String taskType, SimplexEntity se) throws FractionCreateException {
         Fraction[][] sT = new Fraction[se.getBV().size() + 1][se.getFV().size() + 1];
         readGMatrix(gMatrix, se, sT);
-        solveFunc(originalFunc, se, sT);
+        if (taskType.equals("max")) {
+            Fraction[] convertedFunc = convertTaskType(originalFunc);
+            solveFunc(convertedFunc, se, sT);
+        } else solveFunc(originalFunc, se, sT);
         se.setST(sT);
     }
 
@@ -73,8 +76,80 @@ public class SimplexUtils {
 
     public static SimplexEntity step(SimplexEntity oldSE, Point2D rs) throws FractionCreateException {
         SimplexEntity newSE = new SimplexEntity(oldSE);
-
+        swapBF(newSE.getBV(), newSE.getFV(), rs);
+        newSE.getST()[(int) rs.getX()][(int) rs.getY()].swapND();
+        multiplyRow(newSE.getST()[(int) rs.getX()], (int) rs.getY());
+        Fraction[] supColumn = deepCopyColumn(newSE.getST(), (int) rs.getY());
+        multiplyColumn(newSE.getST(), rs);
+        differenceRows(newSE.getST(), supColumn, rs);
+        reSolveBases(newSE);
+        findPossibleFields(newSE);
         return newSE;
+    }
+
+    private static void swapBF(ArrayList<Integer> bV, ArrayList<Integer> fV, Point2D rs) {
+        int bIndex = (int) rs.getX();
+        int fIndex = (int) rs.getY();
+        if (bIndex >= 0 && bIndex < bV.size() && fIndex >= 0 && fIndex < fV.size()) {
+            int temp = bV.get(bIndex);
+            bV.set(bIndex, fV.get(fIndex));
+            fV.set(fIndex, temp);
+        }
+    }
+
+    private static void multiplyRow(Fraction[] row, int element) throws FractionCreateException {
+        for (int i = 0; i < row.length; i++) {
+            if (i != element)
+                row[i] = multiplication(row[i], row[element]);
+        }
+    }
+
+    private static Fraction[] deepCopyColumn(Fraction[][] table, int columnIndex) throws FractionCreateException {
+        Fraction[] savedColumn = new Fraction[table[0].length];
+        for (int i = 0; i < table.length; i++) {
+            savedColumn[i] = new Fraction(table[i][columnIndex].getNumerator(), table[i][columnIndex].getDenominator());
+        }
+        return savedColumn;
+    }
+
+    private static void multiplyColumn(Fraction[][] table, Point2D rs) throws FractionCreateException {
+        for (int i = 0; i < table.length; i++) {
+            if (i != rs.getX()) {
+                Fraction negative = table[(int) rs.getX()][(int) rs.getY()].multiply(-1);
+                table[i][(int) rs.getY()] = multiplication(table[i][(int) rs.getY()], negative);
+            }
+        }
+    }
+
+    private static void differenceRows(Fraction[][] table, Fraction[] supColumn, Point2D rs) throws FractionCreateException {
+        int rIndex = (int) rs.getX();
+        int cIndex = (int) rs.getY();
+        for (int i = 0; i < table.length; i++) {
+            for (int j = 0; j < table[0].length; j++) {
+                if (i != rIndex && j != cIndex) {
+                    Fraction multiF = multiplication(table[rIndex][j], supColumn[i]);
+                    table[i][j] = difference(table[i][j], multiF);
+                }
+            }
+        }
+    }
+
+    private static void reSolveBases(SimplexEntity se) throws FractionCreateException {
+        for (Map.Entry<Integer, Fraction> entry : se.getBase().entrySet()) {
+            if (se.getFV().contains(entry.getKey())) {
+                entry.setValue(new Fraction(0, 1));
+            } else {
+                entry.setValue(se.getST()[se.getBV().indexOf(entry.getKey())][se.getFV().size()]);
+            }
+        }
+    }
+
+    private static Fraction[] convertTaskType(Fraction[] original) throws FractionCreateException {
+        Fraction[] convertedFunc = new Fraction[original.length];
+        for (int i = 0; i < original.length; i++) {
+            convertedFunc[i] = original[i].multiply(-1);
+        }
+        return convertedFunc;
     }
 
     private static void solveFunc(Fraction[] originalFunc, SimplexEntity se, Fraction[][] sT) throws FractionCreateException {

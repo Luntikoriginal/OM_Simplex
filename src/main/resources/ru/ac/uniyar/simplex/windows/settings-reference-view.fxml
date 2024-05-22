@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<VBox xmlns:fx="http://javafx.com/fxml/1" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+      minWidth="-Infinity" prefHeight="350.0" prefWidth="600.0"
+      xmlns="http://javafx.com/javafx/11.0.14-internal">
+    <padding>
+        <Insets top="20.0"/>
+    </padding>
+    <Label text="Ввод настроек - справка">
+        <font>
+            <Font size="18.0"/>
+        </font>
+        <VBox.margin>
+            <Insets bottom="20.0"/>
+        </VBox.margin>
+    </Label>
+    <Label prefWidth="520.0" text="1. Приложение поддерживает от 2 до 16 переменных" wrapText="true">
+        <VBox.margin>
+            <Insets bottom="10.0"/>
+        </VBox.margin>
+        <font>
+            <Font size="13.0"/>
+        </font>
+    </Label>
+    <Label layoutX="161.0" layoutY="57.0" prefWidth="520.0" text="2. Приложение поддерживает от 1 до 15 ограничений"
+           wrapText="true">
+        <VBox.margin>
+            <Insets bottom="10.0"/>
+        </VBox.margin>
+        <font>
+            <Font size="13.0"/>
+        </font>
+    </Label>
+    <Label layoutX="160.0" layoutY="74.0" prefWidth="520.0"
+           text="3. Ограничений должно быть меньше кол-ва переменных минимум на 1" wrapText="true">
+        <VBox.margin>
+            <Insets bottom="10.0"/>
+        </VBox.margin>
+        <font>
+            <Font size="13.0"/>
+        </font>
+    </Label>
+    <Label layoutX="108.0" layoutY="91.0" prefWidth="520.0"
+           text="4. Если выбрать задачу на максимизацию, то она будет конвертирована под минимизацию" wrapText="true">
+        <VBox.margin>
+            <Insets bottom="10.0"/>
+        </VBox.margin>
+        <font>
+            <Font size="13.0"/>
+        </font>
+    </Label>
+    <Label layoutX="56.0" layoutY="120.0" prefWidth="520.0"
+           text="5. Пошаговый способ решения позволит посмотреть каждый этап решения" wrapText="true">
+        <VBox.margin>
+            <Insets bottom="10.0"/>
+        </VBox.margin>
+        <font>
+            <Font size="13.0"/>
+        </font>
+    </Label>
+    <Label layoutX="100.0" layoutY="138.0" prefWidth="520.0" text="6. Автоматический способ решения даст сразу ответ"
+           wrapText="true">
+        <VBox.margin>
+            <Insets bottom="10.0"/>
+        </VBox.margin>
+        <font>
+            <Font size="13.0"/>
+        </font>
+    </Label>
+    <Label layoutX="164.0" layoutY="156.0" prefWidth="520.0"
+           text="7. Выбирать базисные переменные вручную можно только при стандартном методе" wrapText="true">
+        <VBox.margin>
+            <Insets bottom="10.0"/>
+        </VBox.margin>
+        <font>
+            <Font size="13.0"/>
+        </font>
+    </Label>
+    <Label layoutX="50.0" layoutY="274.0" prefWidth="520.0"
+           text="8. Автоматический выбор переменных возьмет первые по порядку" wrapText="true">
+        <font>
+            <Font size="13.0"/>
+        </font>
+    </Label>
+</VBox>

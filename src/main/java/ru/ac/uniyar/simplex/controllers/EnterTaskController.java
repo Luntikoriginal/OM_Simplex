@@ -5,14 +5,18 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import ru.ac.uniyar.simplex.domain.TaskEntity;
-import ru.ac.uniyar.simplex.windows.EnterTaskWindow;
+import ru.ac.uniyar.simplex.utils.FileUtils;
+import ru.ac.uniyar.simplex.windows.*;
+
+import java.io.IOException;
+import java.util.ArrayList;
 
 public class EnterTaskController {
 
     private Stage currentStage;
-    private Stage primaryStage;
 
     @FXML
     private Label welcomeText;
@@ -27,25 +31,41 @@ public class EnterTaskController {
     @FXML
     private CheckBox autoBases;
 
-    public void setProperties(Stage primaryStage, Stage currentStage) {
-        this.primaryStage = primaryStage;
+    public void setProperties(Stage currentStage) {
         this.currentStage = currentStage;
     }
 
     // MENU
     @FXML
     protected void onDownloadMenuClicked() {
-
+        try {
+            TaskEntity task = FileUtils.readTaskFromJSON();
+            SimplexWindow window = new SimplexWindow();
+            window.display(task);
+            currentStage.close();
+        } catch (IOException e) {
+            welcomeText.setText("Не удалось прочитать файл!");
+            welcomeText.setTextFill(Color.RED);
+        }
     }
 
     @FXML
     protected void onCloseMenuClicked() {
+        HelloWindow window = new HelloWindow();
+        window.display();
         currentStage.close();
     }
 
     @FXML
     protected void onAboutMenuClicked() {
+        SettingsReferenceWindow window = new SettingsReferenceWindow();
+        window.display();
+    }
 
+    @FXML
+    protected void onReferenceMenuClicked() {
+        AboutWindow window = new AboutWindow();
+        window.display();
     }
 
     // TEXT FIELDS
@@ -79,7 +99,7 @@ public class EnterTaskController {
     @FXML
     protected void onSaveButtonClicked() {
         TaskEntity task = saveTaskSettings();
-        EnterTaskWindow window = new EnterTaskWindow(primaryStage, currentStage);
+        EnterTaskWindow window = new EnterTaskWindow(currentStage);
         window.displayEnterMatrix(task);
     }
 
@@ -92,6 +112,12 @@ public class EnterTaskController {
         if (solutionWay.getValue().equals("Пошаговый")) task.setSolutionWay("steps");
         else task.setSolutionWay("auto");
         task.setAutoBases(autoBases.isSelected());
+        if (autoBases.isSelected()) {
+            task.setBases(new ArrayList<>());
+            for (int i = 1; i <= task.getLimitations(); i++) {
+                task.getBases().add(i);
+            }
+        }
         return task;
     }
 }

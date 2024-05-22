@@ -5,19 +5,22 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 <?import java.lang.String?>
-<VBox xmlns:fx="http://javafx.com/fxml/1" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity"
-      minHeight="-Infinity"
+<VBox xmlns:fx="http://javafx.com/fxml/1" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
       minWidth="-Infinity" prefHeight="400.0" prefWidth="400.0"
-      xmlns="http://javafx.com/javafx/11.0.14-internal"
-      fx:controller="ru.ac.uniyar.simplex.controllers.EnterTaskController">
+      xmlns="http://javafx.com/javafx/11.0.14-internal" fx:controller="ru.ac.uniyar.simplex.controllers.EnterTaskController">
     <MenuBar>
         <VBox.margin>
             <Insets bottom="20.0"/>
         </VBox.margin>
         <Menu mnemonicParsing="false" text="Меню">
             <MenuItem mnemonicParsing="false" onAction="#onDownloadMenuClicked" text="Загрузить из файла"/>
-            <MenuItem mnemonicParsing="false" onAction="#onCloseMenuClicked" text="Вернуться назад"/>
-            <MenuItem mnemonicParsing="false" onAction="#onAboutMenuClicked" text="Справка"/>
+            <MenuItem mnemonicParsing="false" onAction="#onCloseMenuClicked" text="Вернуться в начало"/>
+        </Menu>
+        <Menu mnemonicParsing="false" text="Справка">
+            <items>
+                <MenuItem mnemonicParsing="false" onAction="#onAboutMenuClicked" text="Ввод настроек"/>
+                <MenuItem mnemonicParsing="false" onAction="#onReferenceMenuClicked" text="О приложении"/>
+            </items>
         </Menu>
     </MenuBar>
     <Label fx:id="welcomeText" text="Введите настройки задачи">
@@ -34,7 +37,8 @@
                 <Font size="14.0"/>
             </font>
         </Label>
-        <Button mnemonicParsing="false" onAction="#onVarDownButtonClicked" prefHeight="20.0" prefWidth="20.0" text="-">
+        <Button focusTraversable="false" mnemonicParsing="false" onAction="#onVarDownButtonClicked" prefHeight="20.0"
+                prefWidth="20.0" text="-">
             <HBox.margin>
                 <Insets right="10.0"/>
             </HBox.margin>
@@ -42,8 +46,10 @@
                 <Font size="10.0"/>
             </font>
         </Button>
-        <TextField fx:id="variables" alignment="CENTER" editable="false" prefWidth="50.0" text="5"/>
-        <Button mnemonicParsing="false" onAction="#onVarUpButtonClicked" prefHeight="20.0" prefWidth="20.0" text="+">
+        <TextField fx:id="variables" alignment="CENTER" editable="false" focusTraversable="false" prefWidth="50.0"
+                   text="5"/>
+        <Button focusTraversable="false" mnemonicParsing="false" onAction="#onVarUpButtonClicked" prefHeight="20.0"
+                prefWidth="20.0" text="+">
             <HBox.margin>
                 <Insets left="10.0"/>
             </HBox.margin>
@@ -58,8 +64,8 @@
                 <Font size="14.0"/>
             </font>
         </Label>
-        <Button mnemonicParsing="false" onAction="#onLimitDownButtonClicked" prefHeight="20.0" prefWidth="20.0"
-                text="-">
+        <Button focusTraversable="false" mnemonicParsing="false" onAction="#onLimitDownButtonClicked" prefHeight="20.0"
+                prefWidth="20.0" text="-">
             <HBox.margin>
                 <Insets right="10.0"/>
             </HBox.margin>
@@ -67,8 +73,10 @@
                 <Font size="10.0"/>
             </font>
         </Button>
-        <TextField fx:id="limitations" alignment="CENTER" editable="false" prefWidth="50.0" text="3"/>
-        <Button mnemonicParsing="false" onAction="#onLimitUpButtonClicked" prefHeight="20.0" prefWidth="20.0" text="+">
+        <TextField fx:id="limitations" alignment="CENTER" editable="false" focusTraversable="false" prefWidth="50.0"
+                   text="3"/>
+        <Button focusTraversable="false" mnemonicParsing="false" onAction="#onLimitUpButtonClicked" prefHeight="20.0"
+                prefWidth="20.0" text="+">
             <HBox.margin>
                 <Insets left="10.0"/>
             </HBox.margin>
@@ -83,7 +91,7 @@
                 <Font size="14.0"/>
             </font>
         </Label>
-        <ChoiceBox fx:id="taskType" prefWidth="150.0" value="Минимизировать">
+        <ChoiceBox fx:id="taskType" focusTraversable="false" prefWidth="150.0" value="Минимизировать">
             <String fx:value="Максимизировать"/>
             <String fx:value="Минимизировать"/>
         </ChoiceBox>
@@ -97,12 +105,13 @@
                 <Font size="14.0"/>
             </font>
         </Label>
-        <ChoiceBox fx:id="solutionWay" prefWidth="150.0" value="Пошаговый">
+        <ChoiceBox fx:id="solutionWay" focusTraversable="false" prefWidth="150.0" value="Пошаговый">
             <String fx:value="Пошаговый"/>
             <String fx:value="Автоматический"/>
         </ChoiceBox>
     </HBox>
-    <CheckBox fx:id="autoBases" mnemonicParsing="false" text="Выбрать базисные переменные автоматически">
+    <CheckBox fx:id="autoBases" focusTraversable="false" mnemonicParsing="false"
+              text="Выбрать базисные переменные автоматически">
         <VBox.margin>
             <Insets bottom="30.0"/>
         </VBox.margin>

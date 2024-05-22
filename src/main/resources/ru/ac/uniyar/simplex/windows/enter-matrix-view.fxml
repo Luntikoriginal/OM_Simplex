@@ -4,20 +4,19 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
-<VBox xmlns:fx="http://javafx.com/fxml/1" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity"
-      minHeight="-Infinity"
+<VBox xmlns:fx="http://javafx.com/fxml/1" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
       minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0"
-      xmlns="http://javafx.com/javafx/11.0.14-internal"
-      fx:controller="ru.ac.uniyar.simplex.controllers.EnterMatrixController">
+      xmlns="http://javafx.com/javafx/11.0.14-internal" fx:controller="ru.ac.uniyar.simplex.controllers.EnterMatrixController">
     <MenuBar>
-        <Menu mnemonicParsing="false" text="File">
-            <MenuItem mnemonicParsing="false" text="Close"/>
+        <Menu mnemonicParsing="false" text="Меню">
+            <MenuItem mnemonicParsing="false" onAction="#onBackToSettingsMenuClicked"
+                      text="Вернуться к вводу настроек"/>
+            <MenuItem mnemonicParsing="false" onAction="#onBackToStartMenuClicked" text="Вернуться в начало"/>
+            <MenuItem mnemonicParsing="false" onAction="#onDownloadTaskMenuClicked" text="Загрузить задачу из файла"/>
         </Menu>
-        <Menu mnemonicParsing="false" text="Edit">
-            <MenuItem mnemonicParsing="false" text="Delete"/>
-        </Menu>
-        <Menu mnemonicParsing="false" text="Help">
-            <MenuItem mnemonicParsing="false" text="About"/>
+        <Menu mnemonicParsing="false" text="Справка">
+            <MenuItem mnemonicParsing="false" onAction="#onReferenceMenuClicked" text="Ввод матрицы"/>
+            <MenuItem mnemonicParsing="false" onAction="#onAboutMenuClicked" text="О приложении"/>
         </Menu>
         <VBox.margin>
             <Insets bottom="20.0"/>

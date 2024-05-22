@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<VBox xmlns:fx="http://javafx.com/fxml/1" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+      minWidth="-Infinity" prefHeight="350.0" prefWidth="600.0"
+      xmlns="http://javafx.com/javafx/11.0.14-internal">
+    <padding>
+        <Insets top="20.0"/>
+    </padding>
+    <Label text="Симплекс метод - справка">
+        <font>
+            <Font size="18.0"/>
+        </font>
+        <VBox.margin>
+            <Insets bottom="20.0"/>
+        </VBox.margin>
+    </Label>
+    <Label prefWidth="520.0"
+           text="1. Светло-голубым подсвечиваются поля, одно из которых можно выбрать как опорный элемент для следующего шага"
+           wrapText="true">
+        <VBox.margin>
+            <Insets bottom="10.0"/>
+        </VBox.margin>
+        <font>
+            <Font size="13.0"/>
+        </font>
+    </Label>
+    <Label layoutX="161.0" layoutY="57.0" prefWidth="520.0"
+           text="2. Розовым подсвечено текущее значение функции, которое должно увеличиваться от шага к шагу"
+           wrapText="true">
+        <VBox.margin>
+            <Insets bottom="10.0"/>
+        </VBox.margin>
+        <font>
+            <Font size="13.0"/>
+        </font>
+    </Label>
+    <Label layoutX="160.0" layoutY="74.0" prefWidth="520.0"
+           text="3. Вы можете перемещаться между шагами симплекс метода" wrapText="true">
+        <VBox.margin>
+            <Insets bottom="10.0"/>
+        </VBox.margin>
+        <font>
+            <Font size="13.0"/>
+        </font>
+    </Label>
+    <Label layoutX="108.0" layoutY="91.0" prefWidth="520.0"
+           text="4. Если не выбрать опорный элемент, тогда будет выбран первый доступный" wrapText="true">
+        <VBox.margin>
+            <Insets bottom="10.0"/>
+        </VBox.margin>
+        <font>
+            <Font size="13.0"/>
+        </font>
+    </Label>
+</VBox>
