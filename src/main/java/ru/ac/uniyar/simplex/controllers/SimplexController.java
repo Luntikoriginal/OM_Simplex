@@ -13,6 +13,7 @@ import ru.ac.uniyar.simplex.domain.Fraction;
 import ru.ac.uniyar.simplex.domain.SimplexEntity;
 import ru.ac.uniyar.simplex.domain.TaskEntity;
 import ru.ac.uniyar.simplex.exceptions.FractionCreateException;
+import ru.ac.uniyar.simplex.utils.ArtificialBasesUtils;
 import ru.ac.uniyar.simplex.utils.FileUtils;
 import ru.ac.uniyar.simplex.utils.GaussUtils;
 import ru.ac.uniyar.simplex.utils.SimplexUtils;
@@ -34,6 +35,7 @@ public class SimplexController {
     private TaskEntity task;
     private Point2D selectedField;
     private Button lastSelectedButton;
+    private String solutionType;
 
     @FXML
     private Label welcomeText;
@@ -57,7 +59,11 @@ public class SimplexController {
             SimplexEntity simplex = createSE(task);
             steps.add(simplex);
             if (task.getSolutionWay().equals("auto")) {
-                while (!checkAnswer(steps.get(currentStep))) nextStep();
+                while (checkAB(steps.get(currentStep)).equals("continue")) nextStep();
+                if (checkAB(steps.get(currentStep)).equals("simplex")) {
+                    nextStep();
+                    while (!checkAnswer(steps.get(currentStep))) nextStep();
+                }
             }
             initialize(steps.get(currentStep));
         } catch (Exception e) {
@@ -67,14 +73,22 @@ public class SimplexController {
     }
 
     private SimplexEntity createSE(TaskEntity task) throws FractionCreateException {
-        Fraction[][] gMatrix = GaussUtils.gauss(task.getMatrix(), task.getBases());
-        System.out.println("Результат Гаусса: " + Arrays.deepToString(gMatrix));
-        return new SimplexEntity(task, gMatrix);
+        if (task.getSolutionType().equals("simplex")) {
+            solutionType = "simplex";
+            Fraction[][] gMatrix = GaussUtils.gauss(task.getMatrix(), task.getBases());
+            return new SimplexEntity(task, gMatrix);
+        } else {
+            solutionType = "artificial basis";
+            return new SimplexEntity(task);
+        }
     }
 
     private void initialize(SimplexEntity simplex) {
         try {
-            welcomeText.setText("Симплекс метод - шаг " + currentStep);
+            if (solutionType.equals("simplex"))
+                welcomeText.setText("Симплекс метод - шаг " + currentStep);
+            else
+                welcomeText.setText("Метод искусственных базисов - шаг " + currentStep);
             answer.setText("");
             table.getChildren().clear();
 
@@ -91,11 +105,12 @@ public class SimplexController {
 
             printBody(simplex);
 
-            checkAnswer(simplex);
+            if (solutionType.equals("simplex")) checkAnswer(simplex);
+            else checkAB(simplex);
 
             lastButton.setFocusTraversable(false);
             lastButton.setDisable(currentStep == 0);
-            nextButton.setDisable(simplex.getPF().isEmpty());
+            nextButton.setDisable(simplex.getPF().isEmpty() && solutionType.equals("simplex"));
         } catch (Exception e) {
             welcomeText.setText(e.getMessage());
             welcomeText.setTextFill(Color.RED);
@@ -180,14 +195,49 @@ public class SimplexController {
         return false;
     }
 
+    private String checkAB(SimplexEntity simplex) {
+        if (simplex.getPF().isEmpty()) {
+            Fraction[][] simplexTable = simplex.getST();
+
+            int rows = simplexTable.length;
+            int cols = simplexTable[0].length;
+
+            for (int j = 0; j < cols; j++) {
+                if (!(simplexTable[rows - 1][j].getNumerator() == 0)) {
+                    answer.setText("Ответ: система несовместна");
+                    return "stop";
+                }
+            }
+            return "simplex";
+        }
+        return "continue";
+    }
+
     @FXML
     protected void nextStep() throws FractionCreateException {
         SimplexEntity currentTable = steps.get(currentStep);
-        if (selectedField == null) selectedField = currentTable.getPF().get(0);
-        SimplexEntity nextTable = SimplexUtils.step(currentTable, selectedField);
-        steps.add(nextTable);
-        currentStep++;
-        initialize(nextTable);
+        if (currentTable.getPF().isEmpty()) {
+            solutionType = "simplex";
+            SimplexEntity nextTable = new SimplexEntity(currentTable);
+            if (task.getTaskType().equals("max")) {
+                Fraction[] convertedFunc = SimplexUtils.convertTaskType(task.getFunction());
+                SimplexUtils.solveFunc(convertedFunc, nextTable, nextTable.getST());
+            } else SimplexUtils.solveFunc(task.getFunction(), nextTable, nextTable.getST());
+            SimplexUtils.findPossibleFields(nextTable);
+            steps.add(nextTable);
+            currentStep++;
+            selectedField = null;
+            initialize(nextTable);
+        } else {
+            if (selectedField == null) selectedField = currentTable.getPF().get(0);
+            SimplexEntity nextTable = SimplexUtils.step(currentTable, selectedField);
+            if (solutionType.equals("artificial basis") && nextTable.getFV().get((int) selectedField.getY()) > task.getVariables())
+                ArtificialBasesUtils.deleteColumn(nextTable, (int) selectedField.getY());
+            steps.add(nextTable);
+            currentStep++;
+            selectedField = null;
+            initialize(nextTable);
+        }
     }
 
     @FXML

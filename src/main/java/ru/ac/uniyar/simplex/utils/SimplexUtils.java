@@ -16,7 +16,7 @@ public class SimplexUtils {
 
     public static void createST(Fraction[][] gMatrix, Fraction[] originalFunc, String taskType, SimplexEntity se) throws FractionCreateException {
         Fraction[][] sT = new Fraction[se.getBV().size() + 1][se.getFV().size() + 1];
-        readGMatrix(gMatrix, se, sT);
+        readMatrix(gMatrix, se, sT);
         if (taskType.equals("max")) {
             Fraction[] convertedFunc = convertTaskType(originalFunc);
             solveFunc(convertedFunc, se, sT);
@@ -105,7 +105,7 @@ public class SimplexUtils {
     }
 
     private static Fraction[] deepCopyColumn(Fraction[][] table, int columnIndex) throws FractionCreateException {
-        Fraction[] savedColumn = new Fraction[table[0].length];
+        Fraction[] savedColumn = new Fraction[table.length];
         for (int i = 0; i < table.length; i++) {
             savedColumn[i] = new Fraction(table[i][columnIndex].getNumerator(), table[i][columnIndex].getDenominator());
         }
@@ -144,7 +144,7 @@ public class SimplexUtils {
         }
     }
 
-    private static Fraction[] convertTaskType(Fraction[] original) throws FractionCreateException {
+    public static Fraction[] convertTaskType(Fraction[] original) throws FractionCreateException {
         Fraction[] convertedFunc = new Fraction[original.length];
         for (int i = 0; i < original.length; i++) {
             convertedFunc[i] = original[i].multiply(-1);
@@ -152,7 +152,7 @@ public class SimplexUtils {
         return convertedFunc;
     }
 
-    private static void solveFunc(Fraction[] originalFunc, SimplexEntity se, Fraction[][] sT) throws FractionCreateException {
+    public static void solveFunc(Fraction[] originalFunc, SimplexEntity se, Fraction[][] sT) throws FractionCreateException {
         for (int i = 0; i < sT[se.getBV().size()].length; i++) {
             Fraction sum = new Fraction(0, 1);
             if (i != sT[se.getBV().size()].length - 1) {
@@ -169,7 +169,7 @@ public class SimplexUtils {
         }
     }
 
-    private static void readGMatrix(Fraction[][] gMatrix, SimplexEntity se, Fraction[][] sT) {
+    private static void readMatrix(Fraction[][] gMatrix, SimplexEntity se, Fraction[][] sT) {
         for (int i = 0; i < gMatrix.length; i++) {
             int k = 0;
             for (int j = 0; j < gMatrix[i].length; j++) {

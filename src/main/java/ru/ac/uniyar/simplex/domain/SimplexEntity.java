@@ -2,9 +2,11 @@ package ru.ac.uniyar.simplex.domain;
 
 import javafx.geometry.Point2D;
 import ru.ac.uniyar.simplex.exceptions.FractionCreateException;
+import ru.ac.uniyar.simplex.utils.ArtificialBasesUtils;
 import ru.ac.uniyar.simplex.utils.SimplexUtils;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,6 +22,15 @@ public class SimplexEntity {
         bV = new ArrayList<>(task.getBases());
         SimplexUtils.createFVAndBases(task, gMatrix, this);
         SimplexUtils.createST(gMatrix, task.getFunction(), task.getTaskType(), this);
+        SimplexUtils.findPossibleFields(this);
+    }
+
+    public SimplexEntity(TaskEntity task) throws FractionCreateException {
+        bV = new ArrayList<>(task.getBases());
+        fV = new ArrayList<>();
+        for (int i = 1; i <= task.getVariables(); i++) fV.add(i);
+        ArtificialBasesUtils.createAB(task.getMatrix(), this);
+        ArtificialBasesUtils.createBases(this);
         SimplexUtils.findPossibleFields(this);
     }
 

@@ -56,7 +56,8 @@ public class EnterMatrixController {
 
         printFXBody();
 
-        if (!task.getAutoBases()) printFXCheckBoxes();
+        if (!task.getAutoBases() && task.getSolutionType().equals("simplex"))
+            printFXCheckBoxes();
 
         printLimitsHeader();
 
@@ -155,7 +156,7 @@ public class EnterMatrixController {
             Fraction[] function = readFunction();
             Fraction[][] limitsMatrix = readLimitsMatrix();
             task.setFunction(function);
-            if (!task.getAutoBases()) {
+            if (!task.getAutoBases() && task.getSolutionType().equals("simplex")) {
                 ArrayList<Integer> bases = readBases();
                 task.setBases(bases);
             }
@@ -186,7 +187,6 @@ public class EnterMatrixController {
                 column++;
             }
         }
-        System.out.println("Function:  " + Arrays.toString(function));
         return function;
     }
 
@@ -220,7 +220,6 @@ public class EnterMatrixController {
                 }
             }
         }
-        System.out.println("Limits:  " + Arrays.deepToString(limitsMatrix));
         return limitsMatrix;
     }
 
@@ -230,7 +229,6 @@ public class EnterMatrixController {
             if (node instanceof CheckBox checkBox && checkBox.isSelected())
                 bases.add(GridPane.getColumnIndex(checkBox));
         }
-        System.out.println("Bases:  " + bases);
         if (bases.size() != task.getLimitations())
             throw new BasesFormatException("Кол-во базисных переменных должно быть равно кол-ву ограничений!");
         return bases;

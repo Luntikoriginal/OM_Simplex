@@ -6,6 +6,7 @@ public class TaskEntity {
 
     private Integer variables;
     private Integer limitations;
+    private String solutionType;
     private String taskType;
     private String solutionWay;
     private Boolean autoBases;
@@ -75,5 +76,13 @@ public class TaskEntity {
 
     public void setBases(ArrayList<Integer> bases) {
         this.bases = bases;
+    }
+
+    public String getSolutionType() {
+        return solutionType;
+    }
+
+    public void setSolutionType(String solutionType) {
+        this.solutionType = solutionType;
     }
 }

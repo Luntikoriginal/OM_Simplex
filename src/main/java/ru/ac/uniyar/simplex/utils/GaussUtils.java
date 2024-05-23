@@ -55,7 +55,6 @@ public class GaussUtils {
     }
 
     private static void printResult(Fraction[][] matrix, ArrayList<Integer> bases) throws FractionCreateException {
-        System.out.println("\nОтвет: ");
 
         if (isCompatibility(matrix)) return;
 
@@ -64,8 +63,6 @@ public class GaussUtils {
             StringBuilder builder = new StringBuilder("X" + bases.get(i) + " = ");
 
             buildResultLine(matrix, i, bases, builder, constant);
-
-            System.out.println(builder);
         }
     }
 
@@ -97,7 +94,6 @@ public class GaussUtils {
                 }
             }
             if (isNonZeroRow && row[row.length - 1].getNumerator() != 0) {
-                System.out.println("Система уравнений несовместна.");
                 return true;
             }
         }

@@ -25,6 +25,8 @@ public class EnterTaskController {
     @FXML
     private TextField limitations;
     @FXML
+    private ChoiceBox<String> solutionType;
+    @FXML
     private ChoiceBox<String> taskType;
     @FXML
     private ChoiceBox<String> solutionWay;
@@ -111,13 +113,29 @@ public class EnterTaskController {
         else task.setTaskType("max");
         if (solutionWay.getValue().equals("Пошаговый")) task.setSolutionWay("steps");
         else task.setSolutionWay("auto");
-        task.setAutoBases(autoBases.isSelected());
-        if (autoBases.isSelected()) {
+        if (solutionType.getValue().equals("Симплекс")) {
+            task.setSolutionType("simplex");
+            if (autoBases.isSelected()) {
+                task.setBases(new ArrayList<>());
+                for (int i = 1; i <= task.getLimitations(); i++) {
+                    task.getBases().add(i);
+                }
+            }
+        } else {
+            task.setSolutionType("artificial basis");
             task.setBases(new ArrayList<>());
             for (int i = 1; i <= task.getLimitations(); i++) {
-                task.getBases().add(i);
+                task.getBases().add(task.getVariables() + i);
             }
         }
+        task.setAutoBases(autoBases.isSelected());
+
         return task;
+    }
+
+    @FXML
+    protected void onTypeChoiceChanged() {
+        autoBases.setDisable(!solutionType.getValue().equals("Симплекс"));
+        autoBases.setSelected(false);
     }
 }
