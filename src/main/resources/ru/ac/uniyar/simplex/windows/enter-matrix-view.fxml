@@ -4,9 +4,11 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
-<VBox xmlns:fx="http://javafx.com/fxml/1" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+<VBox xmlns:fx="http://javafx.com/fxml/1" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity"
+      minHeight="-Infinity"
       minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0"
-      xmlns="http://javafx.com/javafx/11.0.14-internal" fx:controller="ru.ac.uniyar.simplex.controllers.EnterMatrixController">
+      xmlns="http://javafx.com/javafx/11.0.14-internal"
+      fx:controller="ru.ac.uniyar.simplex.controllers.EnterMatrixController">
     <MenuBar>
         <Menu mnemonicParsing="false" text="Меню">
             <MenuItem mnemonicParsing="false" onAction="#onBackToSettingsMenuClicked"

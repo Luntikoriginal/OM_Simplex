@@ -2,14 +2,10 @@ package ru.ac.uniyar.simplex.utils;
 
 import ru.ac.uniyar.simplex.domain.Fraction;
 import ru.ac.uniyar.simplex.domain.SimplexEntity;
-import ru.ac.uniyar.simplex.domain.TaskEntity;
 import ru.ac.uniyar.simplex.exceptions.FractionCreateException;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
-import static ru.ac.uniyar.simplex.utils.FractionUtils.amount;
-import static ru.ac.uniyar.simplex.utils.FractionUtils.multiplication;
 import static ru.ac.uniyar.simplex.utils.SimplexUtils.findPossibleFields;
 
 public class ArtificialBasesUtils {

@@ -11,12 +11,12 @@
         <Insets top="20.0"/>
     </padding>
     <children>
-        <Label text="Версия 1.0.0     Разработчик Илья Юдин ИВТ-31">
+        <Label text="Версия 1.0.0     Разработчик Илья Юдин ИВТ-31" wrapText="true">
             <VBox.margin>
                 <Insets bottom="20.0"/>
             </VBox.margin>
         </Label>
-        <Label text="О приложении">
+        <Label text="О приложении" wrapText="true">
             <font>
                 <Font size="18.0"/>
             </font>
@@ -30,17 +30,16 @@
                 <Insets bottom="10.0"/>
             </VBox.margin>
         </Label>
-        <Label alignment="CENTER" text="Оно позволяет решать задачи линейного программирования тремя способами:"
+        <Label alignment="CENTER" text="Оно позволяет решать задачи линейного программирования двумя способами:"
                wrapText="true">
             <VBox.margin>
                 <Insets bottom="5.0"/>
             </VBox.margin>
         </Label>
-        <Label prefWidth="400.0" text="1. Стандартный симплекс метод с выбором базисных переменных"/>
-        <Label prefWidth="400.0" text="2. Метод искусственного базиса"/>
-        <Label layoutX="110.0" layoutY="140.0" prefWidth="400.0" text="3. Графический метод">
+        <Label prefWidth="400.0" text="1. Стандартный симплекс метод с выбором базисных переменных" wrapText="true"/>
+        <Label prefWidth="400.0" text="2. Метод искусственного базиса" wrapText="true">
             <VBox.margin>
-                <Insets bottom="10.0"/>
+                <Insets bottom="20.0"/>
             </VBox.margin>
         </Label>
         <Label text="Кроме того предусмотрен функционал:">
@@ -48,8 +47,14 @@
                 <Insets bottom="5.0"/>
             </VBox.margin>
         </Label>
-        <Label layoutX="110.0" layoutY="128.0" prefWidth="400.0" text="1. Пошаговое перемещение по этапам решения"/>
+        <Label layoutX="110.0" layoutY="128.0" prefWidth="400.0" text="1. Пошаговое перемещение по этапам решения"
+               wrapText="true"/>
         <Label layoutX="110.0" layoutY="208.0" prefWidth="400.0"
-               text="2. Сохранение задач в файл и последующая загрузка задачи из него"/>
+               text="2. Ручной ввод задачи в целых числах или обыкновенных дробях с гибкими настройками"
+               wrapText="true"/>
+        <Label layoutX="110.0" layoutY="260.0" prefWidth="400.0"
+               text="3. Сохранение задач в файл и последующая загрузка задачи из него" wrapText="true"/>
+        <Label layoutX="110.0" layoutY="295.0" prefWidth="400.0" text="4. На каждой странице предусмотрены справки"
+               wrapText="true"/>
     </children>
 </VBox>

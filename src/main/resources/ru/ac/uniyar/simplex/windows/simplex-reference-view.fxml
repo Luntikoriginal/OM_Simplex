@@ -4,7 +4,8 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
-<VBox xmlns:fx="http://javafx.com/fxml/1" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+<VBox xmlns:fx="http://javafx.com/fxml/1" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity"
+      minHeight="-Infinity"
       minWidth="-Infinity" prefHeight="350.0" prefWidth="600.0"
       xmlns="http://javafx.com/javafx/11.0.14-internal">
     <padding>
@@ -52,6 +53,13 @@
         <VBox.margin>
             <Insets bottom="10.0"/>
         </VBox.margin>
+        <font>
+            <Font size="13.0"/>
+        </font>
+    </Label>
+    <Label layoutX="50.0" layoutY="204.0" prefWidth="520.0"
+           text="5. Метод искусственного базиса автоматически удаляет столбец после перемещения искусственной переменой к свободным переменным"
+           wrapText="true">
         <font>
             <Font size="13.0"/>
         </font>

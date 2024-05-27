@@ -24,7 +24,6 @@ import ru.ac.uniyar.simplex.windows.SimplexWindow;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Map;
 
 public class SimplexController {
@@ -32,6 +31,7 @@ public class SimplexController {
     private Stage currentStage;
     private ArrayList<SimplexEntity> steps;
     private int currentStep;
+    private int lastABStep;
     private TaskEntity task;
     private Point2D selectedField;
     private Button lastSelectedButton;
@@ -58,9 +58,11 @@ public class SimplexController {
             this.steps = new ArrayList<>();
             SimplexEntity simplex = createSE(task);
             steps.add(simplex);
+            adjustWindowSize(simplex);
             if (task.getSolutionWay().equals("auto")) {
                 while (checkAB(steps.get(currentStep)).equals("continue")) nextStep();
                 if (checkAB(steps.get(currentStep)).equals("simplex")) {
+                    lastABStep = currentStep;
                     nextStep();
                     while (!checkAnswer(steps.get(currentStep))) nextStep();
                 }
@@ -82,6 +84,21 @@ public class SimplexController {
             return new SimplexEntity(task);
         }
     }
+
+    private void adjustWindowSize(SimplexEntity simplex) {
+        int fieldWith = 60;
+        int fieldHeight = 35;
+
+        double newWidth = fieldWith * (simplex.getFV().size() + 2) + 150;
+        double newHeight = fieldHeight * (simplex.getBV().size() + 5) + 130;
+
+        currentStage.setMinWidth(newWidth);
+        currentStage.setMinHeight(newHeight);
+        currentStage.setWidth(newWidth);
+        currentStage.setHeight(newHeight);
+        currentStage.centerOnScreen();
+    }
+
 
     private void initialize(SimplexEntity simplex) {
         try {
@@ -188,7 +205,9 @@ public class SimplexController {
             }
         }
         if (simplex.getPF().isEmpty()) {
-            Fraction answerF = simplex.getST()[simplex.getBV().size()][simplex.getFV().size()].multiply(-1);
+            Fraction answerF = simplex.getST()[simplex.getBV().size()][simplex.getFV().size()];
+            if (task.getTaskType().equals("min"))
+                answerF = answerF.multiply(-1);
             answer.setText("Ответ: " + answerF.toString());
             return true;
         }
@@ -217,7 +236,15 @@ public class SimplexController {
     protected void nextStep() throws FractionCreateException {
         SimplexEntity currentTable = steps.get(currentStep);
         if (currentTable.getPF().isEmpty()) {
+            for (int i = task.getVariables() + 1; i <= task.getVariables() + task.getLimitations(); i++) {
+                if (currentTable.getBV().contains(i)) {
+                    Point2D dummy = new Point2D(currentTable.getBV().indexOf(i), 0);
+                    currentTable = SimplexUtils.step(currentTable, dummy);
+                    ArtificialBasesUtils.deleteColumn(currentTable, (int) dummy.getY());
+                }
+            }
             solutionType = "simplex";
+            lastABStep = currentStep;
             SimplexEntity nextTable = new SimplexEntity(currentTable);
             if (task.getTaskType().equals("max")) {
                 Fraction[] convertedFunc = SimplexUtils.convertTaskType(task.getFunction());
@@ -242,8 +269,11 @@ public class SimplexController {
 
     @FXML
     protected void lastStep() {
+        steps.remove(currentStep);
         SimplexEntity lastTable = steps.get(currentStep - 1);
         currentStep--;
+        if (currentStep == lastABStep)
+            solutionType = "artificial basis";
         initialize(lastTable);
     }
 
@@ -261,7 +291,7 @@ public class SimplexController {
             SimplexWindow window = new SimplexWindow();
             window.display(task);
             currentStage.close();
-        } catch (IOException e) {
+        } catch (Exception e) {
             welcomeText.setText("Не удалось прочитать файл!");
             welcomeText.setTextFill(Color.RED);
         }

@@ -6,7 +6,6 @@ import ru.ac.uniyar.simplex.utils.ArtificialBasesUtils;
 import ru.ac.uniyar.simplex.utils.SimplexUtils;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 

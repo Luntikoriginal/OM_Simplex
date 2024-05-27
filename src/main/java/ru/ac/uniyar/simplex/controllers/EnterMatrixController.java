@@ -21,7 +21,6 @@ import ru.ac.uniyar.simplex.windows.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class EnterMatrixController {
 
@@ -46,7 +45,6 @@ public class EnterMatrixController {
     }
 
     private void initialize() {
-
         if (task.getLimitations() > 12) {
             bottomButton.setVisible(false);
             headButton.setVisible(true);
@@ -62,7 +60,24 @@ public class EnterMatrixController {
         printLimitsHeader();
 
         printLimitsBody();
+
+        adjustWindowSize();
     }
+
+    private void adjustWindowSize() {
+        int fieldWith = 60;
+        int fieldHeight = 35;
+
+        double newWidth = fieldWith * (task.getVariables() + 2) + 100;
+        double newHeight = fieldHeight * (task.getLimitations() + 4) + 200;
+
+        currentStage.setMinWidth(newWidth);
+        currentStage.setMinHeight(newHeight);
+        currentStage.setWidth(newWidth);
+        currentStage.setHeight(newHeight);
+        currentStage.centerOnScreen();
+    }
+
 
     private void printLimitsBody() {
         for (int i = 1; i <= task.getLimitations(); i++) {
