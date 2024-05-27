@@ -6,6 +6,7 @@ import ru.ac.uniyar.simplex.exceptions.FractionCreateException;
 
 import java.util.HashMap;
 
+import static ru.ac.uniyar.simplex.utils.FractionUtils.amount;
 import static ru.ac.uniyar.simplex.utils.SimplexUtils.findPossibleFields;
 
 public class ArtificialBasesUtils {
@@ -13,6 +14,7 @@ public class ArtificialBasesUtils {
     public static void createAB(Fraction[][] matrix, SimplexEntity se) throws FractionCreateException {
         Fraction[][] sT = new Fraction[se.getBV().size() + 1][se.getFV().size() + 1];
         readMatrix(matrix, sT);
+        checkB(sT);
         negativeAmountColumn(sT);
         se.setST(sT);
     }
@@ -50,16 +52,11 @@ public class ArtificialBasesUtils {
         findPossibleFields(se);
     }
 
-    private static Fraction amount(Fraction f1, Fraction f2) throws FractionCreateException {
-        int commonDenominator = f1.getDenominator() * f2.getDenominator();
-        int numeratorSum = (f1.getNumerator() * f2.getDenominator()) + (f2.getNumerator() * f1.getDenominator());
-        return new Fraction(numeratorSum, commonDenominator);
-    }
-
-    private static Fraction multiplication(Fraction f1, Fraction f2) throws FractionCreateException {
-        int numerator = f1.getNumerator() * f2.getNumerator();
-        int denominator = f1.getDenominator() * f2.getDenominator();
-        return new Fraction(numerator, denominator);
+    private static void checkB(Fraction[][] matrix) throws FractionCreateException {
+        for (int i = 0; i < matrix.length - 1; i++) {
+            if (matrix[i][matrix[i].length - 1].getNumerator() < 0)
+                matrix[i] = SimplexUtils.convertFunc(matrix[i]);
+        }
     }
 
     private static void negativeAmountColumn(Fraction[][] matrix) throws FractionCreateException {

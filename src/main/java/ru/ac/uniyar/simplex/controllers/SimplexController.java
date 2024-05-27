@@ -247,7 +247,7 @@ public class SimplexController {
             lastABStep = currentStep;
             SimplexEntity nextTable = new SimplexEntity(currentTable);
             if (task.getTaskType().equals("max")) {
-                Fraction[] convertedFunc = SimplexUtils.convertTaskType(task.getFunction());
+                Fraction[] convertedFunc = SimplexUtils.convertFunc(task.getFunction());
                 SimplexUtils.solveFunc(convertedFunc, nextTable, nextTable.getST());
             } else SimplexUtils.solveFunc(task.getFunction(), nextTable, nextTable.getST());
             SimplexUtils.findPossibleFields(nextTable);

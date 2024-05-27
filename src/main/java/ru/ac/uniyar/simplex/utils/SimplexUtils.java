@@ -18,7 +18,7 @@ public class SimplexUtils {
         Fraction[][] sT = new Fraction[se.getBV().size() + 1][se.getFV().size() + 1];
         readMatrix(gMatrix, se, sT);
         if (taskType.equals("max")) {
-            Fraction[] convertedFunc = convertTaskType(originalFunc);
+            Fraction[] convertedFunc = convertFunc(originalFunc);
             solveFunc(convertedFunc, se, sT);
         } else solveFunc(originalFunc, se, sT);
         se.setST(sT);
@@ -144,7 +144,7 @@ public class SimplexUtils {
         }
     }
 
-    public static Fraction[] convertTaskType(Fraction[] original) throws FractionCreateException {
+    public static Fraction[] convertFunc(Fraction[] original) throws FractionCreateException {
         Fraction[] convertedFunc = new Fraction[original.length];
         for (int i = 0; i < original.length; i++) {
             convertedFunc[i] = original[i].multiply(-1);
